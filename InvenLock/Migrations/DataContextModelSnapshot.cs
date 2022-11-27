@@ -22,7 +22,7 @@ namespace InvenLock.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InvenLock.Models.Periferico", b =>
+            modelBuilder.Entity("InvenLock.Models.Equipamento", b =>
                 {
                     b.Property<int>("Codigo")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace InvenLock.Migrations
 
                     b.HasKey("Codigo");
 
-                    b.ToTable("Perifericos");
+                    b.ToTable("Equipamentos");
                 });
 #pragma warning restore 612, 618
         }

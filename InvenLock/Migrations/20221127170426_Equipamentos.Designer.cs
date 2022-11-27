@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvenLock.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221127021736_TabelaPerifericos")]
-    partial class TabelaPerifericos
+    [Migration("20221127170426_Equipamentos")]
+    partial class Equipamentos
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace InvenLock.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("InvenLock.Models.Periferico", b =>
+            modelBuilder.Entity("InvenLock.Models.Equipamento", b =>
                 {
                     b.Property<int>("Codigo")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace InvenLock.Migrations
 
                     b.HasKey("Codigo");
 
-                    b.ToTable("Perifericos");
+                    b.ToTable("Equipamentos");
                 });
 #pragma warning restore 612, 618
         }
