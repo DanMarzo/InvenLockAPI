@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InvenLock.Models
 {
-    public class Periferico
+    public class Equipamento
     {
         [Key]
         public int Codigo { get; set; }
