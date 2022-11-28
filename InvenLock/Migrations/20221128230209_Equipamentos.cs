@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InvenLock.Migrations
 {
     /// <inheritdoc />
-    public partial class creationTable : Migration
+    public partial class Equipamentos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +23,8 @@ namespace InvenLock.Migrations
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SituacaoEquip = table.Column<int>(type: "int", nullable: false),
                     DataCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataFimEquip = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DataFimEquip = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Observacao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

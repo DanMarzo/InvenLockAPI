@@ -31,7 +31,7 @@ namespace InvenLock.Controllers
         }
 
 
-        [HttpGet("GetAll")]
+        [HttpGet("GetAll")]//ConsulatarTodos
         public async Task<IActionResult> GetAllAsync()
         {
             try
@@ -47,6 +47,21 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ConsultaEquipId(int id)
+        {
+            try
+            {
+                Equipamento equipamento = await _context.Equipamentos.FirstOrDefaultAsync(x => x.Id == id);
+                if (equipamento != null)
+                    return Ok(equipamento);
+                throw new Exception("Não foi encontrado o ID");
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("NovoEquip")]
         public async Task<IActionResult> AddNovoEquip(Equipamento novo)
         {
@@ -68,6 +83,5 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPut]
     }
 }

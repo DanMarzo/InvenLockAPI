@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvenLock.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221128014900_creationTable")]
-    partial class creationTable
+    [Migration("20221128230209_Equipamentos")]
+    partial class Equipamentos
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,9 @@ namespace InvenLock.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("NomeEquip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Observacao")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SituacaoEquip")

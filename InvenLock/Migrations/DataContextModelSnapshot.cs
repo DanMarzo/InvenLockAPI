@@ -45,6 +45,9 @@ namespace InvenLock.Migrations
                     b.Property<string>("NomeEquip")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Observacao")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SituacaoEquip")
                         .HasColumnType("int");
 
