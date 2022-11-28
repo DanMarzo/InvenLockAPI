@@ -13,5 +13,6 @@ namespace InvenLock.Models
         public StatusEnum     SituacaoEquip   { get; set; }
         public DateTime       DataCompra      { get; set; }
         public DateTime?      DataFimEquip    { get; set; }
+        public string         Observacao      { get; set; }
     }
 }
