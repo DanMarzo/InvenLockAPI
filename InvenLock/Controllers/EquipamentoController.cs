@@ -83,5 +83,6 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }
