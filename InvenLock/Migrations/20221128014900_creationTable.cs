@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InvenLock.Migrations
 {
     /// <inheritdoc />
-    public partial class Equipamentos : Migration
+    public partial class creationTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace InvenLock.Migrations
                 name: "Equipamentos",
                 columns: table => new
                 {
-                    Codigo = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NomeEquip = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Fabricante = table.Column<int>(type: "int", nullable: false),
@@ -27,7 +27,7 @@ namespace InvenLock.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Equipamentos", x => x.Codigo);
+                    table.PrimaryKey("PK_Equipamentos", x => x.Id);
                 });
         }
 

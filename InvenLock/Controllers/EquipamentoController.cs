@@ -17,14 +17,19 @@ namespace InvenLock.Controllers
             _context = context;
         }
 
-        public bool ValidaUnicidade(Equipamento validar)
+        public async Task<bool> ValidaUnicidade(int codigoValidar)
         {
-            Equipamento confirm = _context.Equipamentos.FirstOrDefaultAsync(x => x.Codigo == validar.Codigo);
-            if (confirm != null)
+            if (await _context.Equipamentos.AnyAsync(x => x.Id == codigoValidar))
                 return true;
-            else
-                return false;
+            return false;
         }
+        public async Task<bool> ValidaUnicidadeNome(string nomeValidar)
+        {
+            if (await _context.Equipamentos.AnyAsync(x => x.NomeEquip.ToLower() == nomeValidar.ToLower()))
+                return true;
+            return false;
+        }
+
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllAsync()
@@ -43,22 +48,24 @@ namespace InvenLock.Controllers
             }
         }
         [HttpPost("NovoEquip")]
-        public async Task<IActionResult> AddNovoEquipAsync(Equipamento novo)
+        public async Task<IActionResult> AddNovoEquip(Equipamento novo)
         {
             try
             {
-                if(confirm == null)
-                {
-                    _context.Equipamentos.Add(novo);
-                }
-                else
-                {
-                    throw new Exception("");
-                }
+                if (await ValidaUnicidade(novo.Id))
+                    throw new Exception($"O {novo.Id}, já existe! =)");
+                if (await ValidaUnicidadeNome(novo.NomeEquip))
+                    throw new Exception($"O {novo.NomeEquip}, já existe! =)");
+
+                novo.DataCompra = DateTime.Now;
+                await _context.Equipamentos.AddAsync(novo);
+                await _context.SaveChangesAsync();
+
+                return Ok(novo.Id);
             }
             catch(Exception ex)
             {
-
+                return BadRequest(ex.Message);
             }
         }
     }

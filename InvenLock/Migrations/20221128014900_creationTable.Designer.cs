@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvenLock.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221127170426_Equipamentos")]
-    partial class Equipamentos
+    [Migration("20221128014900_creationTable")]
+    partial class creationTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace InvenLock.Migrations
 
             modelBuilder.Entity("InvenLock.Models.Equipamento", b =>
                 {
-                    b.Property<int>("Codigo")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Codigo"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataCompra")
                         .HasColumnType("datetime2");
@@ -54,7 +54,7 @@ namespace InvenLock.Migrations
                     b.Property<int>("TipoEquipamento")
                         .HasColumnType("int");
 
-                    b.HasKey("Codigo");
+                    b.HasKey("Id");
 
                     b.ToTable("Equipamentos");
                 });
