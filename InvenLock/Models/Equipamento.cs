@@ -5,7 +5,7 @@ namespace InvenLock.Models
 {
     public class Equipamento
     {
-        public int            Id          { get; set; }
+        public int            Id              { get; set; }
         public string         NomeEquip       { get; set; }
         public FabricanteEnum Fabricante      { get; set; }
         public TipoEquipEnum  TipoEquipamento { get; set; }

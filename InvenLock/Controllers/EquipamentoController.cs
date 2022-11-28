@@ -61,12 +61,13 @@ namespace InvenLock.Controllers
                 await _context.Equipamentos.AddAsync(novo);
                 await _context.SaveChangesAsync();
 
-                return Ok(novo.Id);
+                return Ok($"{novo.Id}:{novo.NomeEquip}, cadastrado com sucesso");
             }
             catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut]
     }
 }
