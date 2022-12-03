@@ -7,7 +7,7 @@ namespace InvenLock.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         { }
-        public DbSet<Equipamento> Equipamentos { get; set; }
+        public DbSet<EstoqueEquipamento> Equipamentos { get; set; }
 
     }
 }

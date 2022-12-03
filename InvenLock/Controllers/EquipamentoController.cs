@@ -36,7 +36,7 @@ namespace InvenLock.Controllers
         {
             try
             {
-                List<Equipamento> ListaEquip = await _context.Equipamentos.ToListAsync();
+                List<EstoqueEquipamento> ListaEquip = await _context.Equipamentos.ToListAsync();
                 if(ListaEquip == null)
                     return Ok(ListaEquip);
                 else
@@ -52,7 +52,7 @@ namespace InvenLock.Controllers
         {
             try
             {
-                Equipamento equipamento = await _context.Equipamentos.FirstOrDefaultAsync(x => x.Id == id);
+                EstoqueEquipamento equipamento = await _context.Equipamentos.FirstOrDefaultAsync(x => x.Id == id);
                 if (equipamento != null)
                     return Ok(equipamento);
                 throw new Exception("Não foi encontrado o ID");
@@ -63,7 +63,7 @@ namespace InvenLock.Controllers
         }
 
         [HttpPost("NovoEquip")]
-        public async Task<IActionResult> AddNovoEquip(Equipamento novo)
+        public async Task<IActionResult> AddNovoEquip(EstoqueEquipamento novo)
         {
             try
             {
