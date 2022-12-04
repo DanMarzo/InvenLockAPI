@@ -8,8 +8,6 @@ namespace InvenLock.Models
         [Required]
         public int                IdEquipEmprestimo { get; set; }
         public List<EstoqueEquip> EstoqueEquip      { get; set; }
-        public int                IdFunc            { get; set; }
-        public Funcionario        Funcionario       { get; set; }
         public int                IdForm            { get; set; }
         public FormEmprestimo     FormEmprestimo    { set; get; }
         public DateTime           DataEmprestimo    { get; set; }
