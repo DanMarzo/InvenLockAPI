@@ -7,7 +7,8 @@ namespace InvenLock.Models
     public class EquipManut
     {
         public int                Id           { get; set; }
-        public List<EstoqueEquip> EstoqueEquip { get; set; }
+        public int                IdEquip      { get; set; }
+        public EstoqueEquip       EstoqueEquip { get; set; }
         public int                IdOcorrencia { get; set; }
         public Ocorrencia         Ocorrencia   { get; set; }
         public DateTime           DataEntrada  { get; set; }
