@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace InvenLock.Controllers
 {
-    /*
+    
     [ApiController]
     [Route("[controller]")]
     public class EquipamentoController : ControllerBase
@@ -20,7 +20,7 @@ namespace InvenLock.Controllers
 
         public async Task<bool> ValidaUnicidade(int codigoValidar)
         {
-            if (await _context.Equipamentos.AnyAsync(x => x.Id == codigoValidar))
+            if (await _context.EstoqueEquips.AnyAsync(x => x.Id == codigoValidar))
                 return true;
             return false;
         }
@@ -85,5 +85,5 @@ namespace InvenLock.Controllers
             }
         }
     
-    }*/
+    }
 }
