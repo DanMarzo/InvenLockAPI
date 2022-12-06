@@ -7,7 +7,7 @@ namespace InvenLock.Models
     public class EstoqueEquip
     {
         [Key]
-        public int             IdEquipamento { get; set; }
+        public int             Id            { get; set; }
         [Required]
         public TipoEquipEnum   Tipo          { get; set; }
         [Required]

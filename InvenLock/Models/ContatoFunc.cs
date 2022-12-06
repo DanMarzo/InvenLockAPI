@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InvenLock.Models
 {
     public class ContatoFunc
     {
-        public int         IdFunc           { get; set; }
+        [Key]
+        public int         Id               { get; set; }
         public Funcionario Funcionario      { get; set; }
         [Column(TypeName = "char(11)")]
         public string      CelPessoal       { get; set; }

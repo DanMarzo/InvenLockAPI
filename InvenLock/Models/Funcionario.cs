@@ -6,8 +6,7 @@ namespace InvenLock.Models
 {
     public class Funcionario
     {
-        [Key]
-        public int              IdFunc         { get; set; }
+        public int              Id             { get; set; }
         [Column(TypeName = "varchar(20)")]
         public string           Nome           { get; set; }
         [Column(TypeName = "varchar(20)")]

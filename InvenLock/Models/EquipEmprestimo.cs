@@ -6,10 +6,8 @@ namespace InvenLock.Models
     {
         [Key]
         [Required]
-        public int                IdEquipEmprestimo { get; set; }
+        public int                Id                { get; set; }
         public List<EstoqueEquip> EstoqueEquip      { get; set; }
-        public int                IdFunc            { get; set; }
-        public Funcionario        Funcionario       { get; set; }
         public int                IdForm            { get; set; }
         public FormEmprestimo     FormEmprestimo    { set; get; }
         public DateTime           DataEmprestimo    { get; set; }

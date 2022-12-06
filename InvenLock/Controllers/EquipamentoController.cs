@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 
 namespace InvenLock.Controllers
 {
+    /*
     [ApiController]
     [Route("[controller]")]
     public class EquipamentoController : ControllerBase
@@ -83,6 +84,6 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-    }
+    
+    }*/
 }
