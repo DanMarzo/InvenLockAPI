@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using InvenLock.Models.Enums;
 
 namespace InvenLock.Controllers
 {
@@ -26,18 +27,18 @@ namespace InvenLock.Controllers
         }
         public async Task<bool> ValidaUnicidadeNome(string nomeValidar)
         {
-            if (await _context.Equipamentos.AnyAsync(x => x.NomeEquip.ToLower() == nomeValidar.ToLower()))
+            if (await _context.EstoqueEquips.AnyAsync(x => x.NomeEquip.ToLower() == nomeValidar.ToLower()))
                 return true;
             return false;
         }
-
-
+        
+        //INICIO CONSULTAS
         [HttpGet("GetAll")]//ConsulatarTodos
         public async Task<IActionResult> GetAllAsync()
         {
             try
             {
-                List<EstoqueEquipamento> ListaEquip = await _context.Equipamentos.ToListAsync();
+                List<EstoqueEquip> ListaEquip = await _context.EstoqueEquips.ToListAsync();
                 if(ListaEquip == null)
                     return Ok(ListaEquip);
                 else
@@ -49,22 +50,40 @@ namespace InvenLock.Controllers
             }
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult> ConsultaEquipId(int id)
+        public async Task<IActionResult> ConsultaEquipId(int idBusca)
         {
             try
             {
-                EstoqueEquipamento equipamento = await _context.Equipamentos.FirstOrDefaultAsync(x => x.Id == id);
+                EstoqueEquip equipamento = await _context.EstoqueEquips.FirstOrDefaultAsync(x => x.Id == idBusca);
                 if (equipamento != null)
                     return Ok(equipamento);
-                throw new Exception("Não foi encontrado o ID");
+                throw new Exception("Nada foi foi encontrado, verifique o Id");
             }catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-        }
+        }/*
+        [HttpGet("Disponivel")]
+        public async Task<IActionResult> ConsultaDisponiveis()
+        {
+            try
+            {
+                EstoqueEquip listaDisponiveis = await _context.EstoqueEquips.Where(x => x.Situacao == StatusEquipEnum.Disponível);
+                
+                if (listaDisponiveis != null)
+                    return Ok(listaDisponiveis);
+                else
+                    return BadRequest("Nada foi encontrado");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }*/
+        //FIM CONSULTAS
 
         [HttpPost("NovoEquip")]
-        public async Task<IActionResult> AddNovoEquip(EstoqueEquipamento novo)
+        public async Task<IActionResult> AddNovoEquip(EstoqueEquip novo)
         {
             try
             {
@@ -74,7 +93,7 @@ namespace InvenLock.Controllers
                     throw new Exception($"O {novo.NomeEquip}, já existe! =)");
 
                 novo.DataCompra = DateTime.Now;
-                await _context.Equipamentos.AddAsync(novo);
+                await _context.EstoqueEquips.AddAsync(novo);
                 await _context.SaveChangesAsync();
 
                 return Ok($"{novo.Id}:{novo.NomeEquip}, cadastrado com sucesso");
