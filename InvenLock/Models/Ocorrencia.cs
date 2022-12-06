@@ -12,6 +12,6 @@ namespace InvenLock.Models
         public string           DescOcorrencia { get; set; }
         public DateTime         DataOcorrencia { get; set; }
         public int              IdEquip        { get; set; }
-        //public EquipManut EquipManutencao { get; set; }
+        public List<EquipManut> EquipManutencao { get; set; }
     }
 }
