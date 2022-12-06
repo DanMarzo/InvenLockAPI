@@ -2,9 +2,10 @@
 {
     public enum StatusEquipEnum
     {
-        Emprestado   = 1,
-        Sucata       = 2,
-        Indisponivel = 3,
-        Disponível   = 4,
+        Disponível   = 1,
+        Indisponivel = 2,
+        Sucata       = 3,
+        Emprestado   = 4,
+        Manutenção   = 5
     }
 }
