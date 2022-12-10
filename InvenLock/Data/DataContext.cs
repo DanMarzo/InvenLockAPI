@@ -10,15 +10,18 @@ namespace InvenLock.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         { }
-        public DbSet<EstoqueEquip>    EstoqueEquips    { get; set; }
-        public DbSet<EquipEmprestimo> EquipEmprestimo  { get; set; }
-        public DbSet<ContatoFunc>     ContatoFuncs     { get; set; }
-        public DbSet<EquipManut>      EquipManuts      { get; set; }
-        public DbSet<EquipSucata>     EquipSucatas     { get; set; }
-        public DbSet<FormEmprestimo>  FormEmprestimos  { get; set; }
-        public DbSet<FuncInfra>       FuncInfras       { get; set; }
-        public DbSet<Funcionario>     Funcionarios     { get; set; }
-        public DbSet<Ocorrencia>      Ocorrencias      { get; set; }
+        public DbSet<EstoqueEquipamento> EstoqueEquipamento { get;set; }
+        public DbSet<ManutEquip> ManutEquips { get;set; }
+        public DbSet<SucataEquip> SucataEquips { get;set; }
+        public DbSet<Ocorrencia> Ocorrencias { get; set; }
+        public DbSet<EmprestimoEquip> EmprestimoEquip { get; set; }
+        public DbSet<FormEmprestimo> FormEmprestimos { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<FuncionarioContato> FuncionarioContatos { get; set; }
+        public DbSet<InfraFuncionario> InfraFuncionarios { get; set; }
+
+        /*
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -98,6 +101,6 @@ namespace InvenLock.Data
                     IdFunc   = 1,
                     TipoFunc = FuncInfraEnum.Tecnico
                 });
-        }
+        }*/
     }
 }

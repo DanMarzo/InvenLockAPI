@@ -8,7 +8,7 @@ using InvenLock.Models.Enums;
 
 namespace InvenLock.Controllers
 {
-    
+    /*
     [ApiController]
     [Route("[controller]")]
     public class EquipamentoController : ControllerBase
@@ -79,7 +79,7 @@ namespace InvenLock.Controllers
             {
 
             }
-        }*/
+        }
         //FIM CONSULTAS
 
         [HttpPost("NovoEquip")]
@@ -104,5 +104,5 @@ namespace InvenLock.Controllers
             }
         }
     
-    }
+    }*/
 }

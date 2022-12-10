@@ -1,17 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Text.Json.Serialization;
 
 namespace InvenLock.Models
 {
     public class Ocorrencia
     {
-        public int              Id             { get; set; }
-        public int              IdFunc         { get; set; }
-        public Funcionario      Funcionario    { get; set; }
-        [Column(TypeName = "varchar(250)")]
-        public string           DescOcorrencia { get; set; }
-        public DateTime         DataOcorrencia { get; set; }
-        public int              IdEquip        { get; set; }
-        public List<EquipManut> EquipManutencao { get; set; }
+        //Atributos para relacionamento
+        public int Id { get; set; }
+        [JsonIgnore]
+        public ManutEquip ManutEquip { get; set; }
     }
 }
