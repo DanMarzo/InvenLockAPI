@@ -10,7 +10,7 @@ namespace InvenLock.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         { }
-        public DbSet<EstoqueEquipamento> EstoqueEquipamento { get;set; }
+        public DbSet<EstoqueEquipamento> EstoqueEquipamentos { get;set; }
         public DbSet<ManutEquip> ManutEquips { get;set; }
         public DbSet<SucataEquip> SucataEquips { get;set; }
         public DbSet<Ocorrencia> Ocorrencias { get; set; }
@@ -18,89 +18,23 @@ namespace InvenLock.Data
         public DbSet<FormEmprestimo> FormEmprestimos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<FuncionarioContato> FuncionarioContatos { get; set; }
-        public DbSet<InfraFuncionario> InfraFuncionarios { get; set; }
 
-        /*
-        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EstoqueEquip>().HasData(
-                new EstoqueEquip() { 
-                    Id = 1, 
-                    Tipo = TipoEquipEnum.Notebook, 
-                    Situacao = StatusEquipEnum.Emprestado, 
-                    NomeEquip = "DAN-DESKTOP-001", 
-                    Fabricante = FabEnum.Asus, 
-                    Descricao = "Notebook empresarial", 
-                    DataCompra = DateTime.Now },
-                new EstoqueEquip()
-                {
-                    Id = 2,
-                    Tipo = TipoEquipEnum.Desktop,
-                    Situacao = StatusEquipEnum.Manutenção,
-                    NomeEquip = "THI-DESKTOP-002",
-                    Fabricante = FabEnum.Samsung,
-                    Descricao = "Maquina empresarial em posse do Thiago", DataCompra = DateTime.Now
-                });
-            modelBuilder.Entity<EquipManut>().HasData(
-                new EquipManut
-                {
-                    Id = 1,
-                    IdOcorrencia = 1,
-                    DataEntrada = DateTime.Now,
-                    Desc = "O infeliz molhou",
-                    Status = StatusManuEnum.Pendente,
-                    IdEquip = 2,
-                });
-            modelBuilder.Entity<Ocorrencia>().HasData(
-                new Ocorrencia 
-                { 
-                    Id = 1,
-                    DataOcorrencia = DateTime.Now,
-                    DescOcorrencia = "O infeliz deixo cair na agua",
-                    IdFunc = 2,
-                    IdEquip = 2,
-                });
-            modelBuilder.Entity<EquipEmprestimo>().HasData(
-                new EquipEmprestimo
-                {
-                    Id = 1,
-                    DataEmprestimo = DateTime.Now,
-                    IdForm = 1,
-                });
-            modelBuilder.Entity<FormEmprestimo>().HasData(
-                new FormEmprestimo
-                {
-                    Id = 1,
-                    Emissao = DateTime.Now,
-                    IdEquipEmprestimo = 1,
-                    IdFunc = 1,
-                    IdTecnico = 1
-                });
-
+           
             Funcionario user = new Funcionario();
             Criptografia.CriarPasswordHash("1q2w3e4r", out byte[] hash, out byte[] salt);
-            user.Id             = 1;
-            user.Nome           = "Dan";
-            user.Admissao       = DateTime.Now;
-            user.PasswordHash   = hash;
-            user.PasswordSalt   = salt;
+            user.Id = 1;
+            user.Nome = "Dan";
+            user.Admissao = DateTime.Now;
+            user.PasswordHash = hash;
+            user.PasswordSalt = salt;
             user.PasswordString = string.Empty;
-            user.Cpf            = "12345678901";
-            user.SobreNome      = "Marzo";
-            user.Situacao       = SituacaoFuncEnum.Ativo;
+            user.Cpf = "12345678901";
+            user.Situacao = SituacaoFuncEnum.Ativo;
 
             modelBuilder.Entity<Funcionario>().HasData(user);
-
-
-            modelBuilder.Entity<FuncInfra>().HasData(
-                new FuncInfra
-                {
-                    Id       = 1,
-                    IdFunc   = 1,
-                    TipoFunc = FuncInfraEnum.Tecnico
-                });
-        }*/
+        }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InvenLock.Migrations
 {
     /// <inheritdoc />
-    public partial class FormEmprestimoInfraEstruturaOneToOne : Migration
+    public partial class RelacaodeTodos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,23 +35,19 @@ namespace InvenLock.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SobreNome = table.Column<string>(type: "varchar(20)", nullable: true),
+                    Admissao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Demissao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Cpf = table.Column<string>(type: "char(11)", nullable: true),
+                    Situacao = table.Column<int>(type: "int", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    FotoFuncionario = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Funcionarios", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Ocorrencias",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Ocorrencias", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,6 +67,27 @@ namespace InvenLock.Migrations
                         name: "FK_SucataEquips_EstoqueEquipamento_EstoqueEquipamentoId",
                         column: x => x.EstoqueEquipamentoId,
                         principalTable: "EstoqueEquipamento",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FormEmprestimos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FuncionarioId = table.Column<int>(type: "int", nullable: false),
+                    Devolucao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Emissao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormEmprestimos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FormEmprestimos_Funcionarios_FuncionarioId",
+                        column: x => x.FuncionarioId,
+                        principalTable: "Funcionarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -99,20 +116,50 @@ namespace InvenLock.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InfraFuncionarios",
+                name: "Ocorrencias",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FuncionarioId = table.Column<int>(type: "int", nullable: false)
+                    FuncionarioId = table.Column<int>(type: "int", nullable: false),
+                    DescOcorrencia = table.Column<string>(type: "varchar(250)", nullable: true),
+                    DataOcorrencia = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InfraFuncionarios", x => x.Id);
+                    table.PrimaryKey("PK_Ocorrencias", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InfraFuncionarios_Funcionarios_FuncionarioId",
+                        name: "FK_Ocorrencias_Funcionarios_FuncionarioId",
                         column: x => x.FuncionarioId,
                         principalTable: "Funcionarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmprestimoEquip",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EstoqueEquipamentoId = table.Column<int>(type: "int", nullable: false),
+                    FormEmprestimoId = table.Column<int>(type: "int", nullable: false),
+                    DataEmprestimo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataDevolucao = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmprestimoEquip", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EmprestimoEquip_EstoqueEquipamento_EstoqueEquipamentoId",
+                        column: x => x.EstoqueEquipamentoId,
+                        principalTable: "EstoqueEquipamento",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmprestimoEquip_FormEmprestimos_FormEmprestimoId",
+                        column: x => x.FormEmprestimoId,
+                        principalTable: "FormEmprestimos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -147,60 +194,6 @@ namespace InvenLock.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "FormEmprestimos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FuncionarioId = table.Column<int>(type: "int", nullable: false),
-                    InfraFuncionarioId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FormEmprestimos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FormEmprestimos_Funcionarios_FuncionarioId",
-                        column: x => x.FuncionarioId,
-                        principalTable: "Funcionarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FormEmprestimos_InfraFuncionarios_InfraFuncionarioId",
-                        column: x => x.InfraFuncionarioId,
-                        principalTable: "InfraFuncionarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EmprestimoEquip",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EstoqueEquipamentoId = table.Column<int>(type: "int", nullable: false),
-                    FormEmprestimoId = table.Column<int>(type: "int", nullable: false),
-                    DataEmprestimo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataDevolucao = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmprestimoEquip", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EmprestimoEquip_EstoqueEquipamento_EstoqueEquipamentoId",
-                        column: x => x.EstoqueEquipamentoId,
-                        principalTable: "EstoqueEquipamento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmprestimoEquip_FormEmprestimos_FormEmprestimoId",
-                        column: x => x.FormEmprestimoId,
-                        principalTable: "FormEmprestimos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_EmprestimoEquip_EstoqueEquipamentoId",
                 table: "EmprestimoEquip",
@@ -218,20 +211,8 @@ namespace InvenLock.Migrations
                 column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FormEmprestimos_InfraFuncionarioId",
-                table: "FormEmprestimos",
-                column: "InfraFuncionarioId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_FuncionarioContatos_FuncionarioId",
                 table: "FuncionarioContatos",
-                column: "FuncionarioId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InfraFuncionarios_FuncionarioId",
-                table: "InfraFuncionarios",
                 column: "FuncionarioId",
                 unique: true);
 
@@ -246,6 +227,11 @@ namespace InvenLock.Migrations
                 table: "ManutEquips",
                 column: "OcorrenciaId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ocorrencias_FuncionarioId",
+                table: "Ocorrencias",
+                column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SucataEquips_EstoqueEquipamentoId",
@@ -277,9 +263,6 @@ namespace InvenLock.Migrations
 
             migrationBuilder.DropTable(
                 name: "EstoqueEquipamento");
-
-            migrationBuilder.DropTable(
-                name: "InfraFuncionarios");
 
             migrationBuilder.DropTable(
                 name: "Funcionarios");

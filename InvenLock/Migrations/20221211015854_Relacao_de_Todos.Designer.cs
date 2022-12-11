@@ -4,6 +4,7 @@ using InvenLock.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvenLock.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221211015854_Relacao_de_Todos")]
+    partial class RelacaodeTodos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +86,7 @@ namespace InvenLock.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EstoqueEquipamentos");
+                    b.ToTable("EstoqueEquipamento");
                 });
 
             modelBuilder.Entity("InvenLock.Models.FormEmprestimo", b =>
@@ -130,9 +133,6 @@ namespace InvenLock.Migrations
                     b.Property<byte[]>("FotoFuncionario")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("Nome")
-                        .HasColumnType("varchar(20)");
-
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
@@ -142,21 +142,12 @@ namespace InvenLock.Migrations
                     b.Property<int>("Situacao")
                         .HasColumnType("int");
 
+                    b.Property<string>("SobreNome")
+                        .HasColumnType("varchar(20)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Funcionarios");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Admissao = new DateTime(2022, 12, 10, 23, 14, 3, 522, DateTimeKind.Local).AddTicks(1753),
-                            Cpf = "12345678901",
-                            Nome = "Dan",
-                            PasswordHash = new byte[] { 195, 198, 248, 164, 243, 116, 172, 127, 162, 122, 244, 94, 226, 97, 164, 249, 30, 223, 241, 212, 180, 231, 252, 149, 4, 123, 5, 9, 57, 32, 96, 42, 238, 203, 123, 177, 182, 8, 223, 9, 40, 181, 7, 47, 51, 251, 164, 156, 131, 120, 23, 113, 26, 224, 96, 149, 24, 223, 152, 114, 149, 232, 219, 179 },
-                            PasswordSalt = new byte[] { 223, 156, 219, 65, 4, 94, 155, 226, 174, 55, 247, 100, 254, 89, 70, 84, 111, 110, 117, 60, 129, 137, 74, 161, 171, 81, 192, 158, 51, 113, 187, 170, 142, 117, 18, 210, 176, 250, 167, 202, 148, 189, 166, 240, 22, 46, 201, 84, 113, 50, 238, 89, 29, 139, 27, 101, 146, 52, 235, 50, 253, 50, 189, 145, 200, 151, 4, 63, 186, 194, 35, 241, 201, 68, 125, 9, 14, 221, 124, 220, 86, 149, 47, 195, 23, 158, 188, 142, 238, 246, 84, 106, 31, 226, 106, 192, 37, 10, 209, 222, 245, 231, 194, 55, 50, 255, 168, 166, 19, 214, 94, 223, 42, 209, 121, 200, 109, 168, 52, 138, 234, 59, 184, 76, 147, 89, 161, 233 },
-                            Situacao = 1
-                        });
                 });
 
             modelBuilder.Entity("InvenLock.Models.FuncionarioContato", b =>
