@@ -55,7 +55,7 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpPost]
+        [HttpPost("AutenticarFunc")]
         public async Task<IActionResult> AutenticarFuncionario(Funcionario funcLogin)
         {
             try
