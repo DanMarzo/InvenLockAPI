@@ -37,5 +37,23 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut]
+        public async Task<IActionResult> AtualizaSituacaoFuncAsync(Funcionario novaInfoFunc)
+        {
+            try
+            {
+                Funcionario atualizarFunc = await _context.Funcionarios.FirstOrDefaultAsync( x => x.Id == novaInfoFunc.Id );
+                if (atualizarFunc == null)
+                    throw new Exception($"Id: {novaInfoFunc.Id} inválido");
+                atualizarFunc.Situacao = novaInfoFunc.Situacao;
+                _context.Funcionarios.Update(atualizarFunc);
+                int linhas = await _context.SaveChangesAsync();
+                return Ok($"{linhas} alteradas");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
