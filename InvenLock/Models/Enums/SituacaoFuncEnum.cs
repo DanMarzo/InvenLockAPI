@@ -2,7 +2,7 @@
 {
     public enum SituacaoFuncEnum
     {
-        Ativo   = 1,
-        Inativo = 2
+        Inativo = 0,
+        Ativo   = 1
     }
 }
