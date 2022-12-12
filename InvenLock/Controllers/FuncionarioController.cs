@@ -55,5 +55,22 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost]
+        public async Task<IActionResult> AutenticarFuncionario(Funcionario funcLogin)
+        {
+            try
+            {
+                Funcionario autenticar = await _context.Funcionarios.FirstOrDefaultAsync(x => x.Id == funcLogin.Id);
+                if (autenticar != null)
+                    throw new Exception("Funcionario não encontrado =(");
+                if (!Criptografia.VerificarPasswordHash(funcLogin.PasswordString, funcLogin.PasswordHash, funcLogin.PasswordSalt))
+                    throw new Exception("Senha Incorreta =( !");
+                return Ok($"Usuario autenticado, bem-vindo {autenticar.Nome}");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
