@@ -105,7 +105,7 @@ namespace InvenLock.Controllers
         }
         // -- FIM -- INSERÇÃO DE DADOS
         // -- INICIO -- Atualiza dados
-        
+        // ---------> (INICIO) REFERENTE A INCLUSÃO DE UM FORMULARIO <--------- 
         [HttpPost("IncluirForms")] //Funciona =)   
         public async Task<IActionResult> AddFormaAsync(FormEmprestimo form)
         {
@@ -160,26 +160,6 @@ namespace InvenLock.Controllers
             _context.SaveChanges();
             return true;
         }
-
-        /*
-        [HttpPut("Emprestimo")]
-        public async Task<IActionResult> EmprestimoAsync(EmprestimoEquip atualizar)
-        {
-            try
-            {
-                EmprestimoEquip emprestimo = await _context.EmprestimoEquip
-                .Include(ee => ee.EstoqueEquipamento)
-                .Include(fe => fe.FormEmprestimo)
-                .FirstOrDefaultAsync(x => x.Id == atualizar.Id);
-
-                emprestimo.DataEmprestimo = DateTime.Now;
-                emprestimo.EstoqueEquipamentoId = atualizar.Id;
-
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }*/
+        // ---------> (FIM) REFERENTE A INCLUSÃO DE UM FORMULARIO <--------- 
     }
 }
