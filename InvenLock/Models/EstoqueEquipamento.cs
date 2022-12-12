@@ -9,7 +9,7 @@ namespace InvenLock.Models
     {
         public int Id { get; set; }
         [JsonIgnore]
-        public EmprestimoEquip EmprestimoEquip { get; set; }
+        public List<FormEmprestimo> FormEmprestimo { get; set; }
         [JsonIgnore]
         public SucataEquip SucataEquip { get; set; }
         [JsonIgnore]

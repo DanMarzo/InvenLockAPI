@@ -10,9 +10,10 @@ namespace InvenLock.Models
         public Funcionario Funcionario { get; set; }
         public int FuncionarioId { get; set; }
         [JsonIgnore]
-        public List<EmprestimoEquip> EmprestimoEquip { get; set; }
+        public EstoqueEquipamento EstoqueEquipamento { get; set; }
+        public int EstoqueEquipamentoId { get; set; }
         //Atributos 
         public DateTime? Devolucao { get; set; }
-        public DateTime Emissao { get; set; }
+        public DateTime? Emissao { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace InvenLock.Data
         public DbSet<ManutEquip> ManutEquips { get;set; }
         public DbSet<SucataEquip> SucataEquips { get;set; }
         public DbSet<Ocorrencia> Ocorrencias { get; set; }
-        public DbSet<EmprestimoEquip> EmprestimoEquip { get; set; }
+        //public DbSet<EmprestimoEquip> EmprestimoEquip { get; set; }
         public DbSet<FormEmprestimo> FormEmprestimos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<FuncionarioContato> FuncionarioContatos { get; set; }
@@ -35,6 +35,7 @@ namespace InvenLock.Data
             user.Situacao = SituacaoFuncEnum.Ativo;
 
             modelBuilder.Entity<Funcionario>().HasData(user);
+
         }
     }
 }
