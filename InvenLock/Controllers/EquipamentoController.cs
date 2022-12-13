@@ -45,7 +45,7 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("{idBusca}")] // Ele nao retorna nada pedir ajuda =(
+        [HttpGet("{idBusca}")] 
         public async Task<IActionResult> GetUnicoAsync(int idBusca)
         {
             try

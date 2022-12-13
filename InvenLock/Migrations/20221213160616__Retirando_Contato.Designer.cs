@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvenLock.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221211021404__Nova_Relacao_3")]
-    partial class NovaRelacao3
+    [Migration("20221213160616__Retirando_Contato")]
+    partial class RetirandoContato
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,36 +24,6 @@ namespace InvenLock.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("InvenLock.Models.EmprestimoEquip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DataDevolucao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataEmprestimo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EstoqueEquipamentoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FormEmprestimoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EstoqueEquipamentoId")
-                        .IsUnique();
-
-                    b.HasIndex("FormEmprestimoId");
-
-                    b.ToTable("EmprestimoEquip");
-                });
 
             modelBuilder.Entity("InvenLock.Models.EstoqueEquipamento", b =>
                 {
@@ -100,13 +70,18 @@ namespace InvenLock.Migrations
                     b.Property<DateTime?>("Devolucao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Emissao")
+                    b.Property<DateTime?>("Emissao")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("EstoqueEquipamentoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EstoqueEquipamentoId");
 
                     b.HasIndex("FuncionarioId");
 
@@ -124,11 +99,20 @@ namespace InvenLock.Migrations
                     b.Property<DateTime>("Admissao")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CelPessoal")
+                        .HasColumnType("char(11)");
+
                     b.Property<string>("Cpf")
                         .HasColumnType("char(11)");
 
                     b.Property<DateTime?>("Demissao")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailCorp")
+                        .HasColumnType("varchar(70)");
+
+                    b.Property<string>("EmailPessoal")
+                        .HasColumnType("varchar(70)");
 
                     b.Property<byte[]>("FotoFuncionario")
                         .HasColumnType("varbinary(max)");
@@ -142,8 +126,13 @@ namespace InvenLock.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("Ramal")
+                        .HasColumnType("char(4)");
+
                     b.Property<int>("Situacao")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.HasKey("Id");
 
@@ -153,44 +142,17 @@ namespace InvenLock.Migrations
                         new
                         {
                             Id = 1,
-                            Admissao = new DateTime(2022, 12, 10, 23, 14, 3, 522, DateTimeKind.Local).AddTicks(1753),
+                            Admissao = new DateTime(2022, 12, 13, 13, 6, 16, 5, DateTimeKind.Local).AddTicks(4695),
+                            CelPessoal = "11955008212",
                             Cpf = "12345678901",
+                            EmailCorp = "marzogildan@invenlock.com",
+                            EmailPessoal = "marzogildan@gmail.com",
                             Nome = "Dan",
-                            PasswordHash = new byte[] { 195, 198, 248, 164, 243, 116, 172, 127, 162, 122, 244, 94, 226, 97, 164, 249, 30, 223, 241, 212, 180, 231, 252, 149, 4, 123, 5, 9, 57, 32, 96, 42, 238, 203, 123, 177, 182, 8, 223, 9, 40, 181, 7, 47, 51, 251, 164, 156, 131, 120, 23, 113, 26, 224, 96, 149, 24, 223, 152, 114, 149, 232, 219, 179 },
-                            PasswordSalt = new byte[] { 223, 156, 219, 65, 4, 94, 155, 226, 174, 55, 247, 100, 254, 89, 70, 84, 111, 110, 117, 60, 129, 137, 74, 161, 171, 81, 192, 158, 51, 113, 187, 170, 142, 117, 18, 210, 176, 250, 167, 202, 148, 189, 166, 240, 22, 46, 201, 84, 113, 50, 238, 89, 29, 139, 27, 101, 146, 52, 235, 50, 253, 50, 189, 145, 200, 151, 4, 63, 186, 194, 35, 241, 201, 68, 125, 9, 14, 221, 124, 220, 86, 149, 47, 195, 23, 158, 188, 142, 238, 246, 84, 106, 31, 226, 106, 192, 37, 10, 209, 222, 245, 231, 194, 55, 50, 255, 168, 166, 19, 214, 94, 223, 42, 209, 121, 200, 109, 168, 52, 138, 234, 59, 184, 76, 147, 89, 161, 233 },
+                            PasswordHash = new byte[] { 219, 98, 106, 66, 97, 109, 100, 117, 161, 119, 36, 129, 222, 138, 2, 127, 36, 25, 190, 238, 96, 222, 36, 229, 247, 213, 154, 154, 223, 91, 72, 129, 253, 147, 225, 48, 119, 246, 103, 53, 253, 4, 42, 192, 174, 176, 222, 241, 201, 125, 15, 23, 61, 58, 206, 104, 124, 129, 113, 129, 243, 94, 229, 96 },
+                            PasswordSalt = new byte[] { 105, 139, 107, 110, 0, 137, 150, 195, 40, 123, 12, 179, 53, 252, 143, 8, 161, 211, 68, 136, 178, 191, 149, 185, 250, 125, 214, 51, 32, 120, 250, 17, 245, 75, 116, 17, 28, 46, 24, 107, 54, 201, 117, 174, 182, 100, 114, 172, 242, 179, 157, 152, 15, 74, 125, 193, 0, 56, 154, 7, 112, 242, 209, 157, 100, 84, 67, 203, 52, 149, 60, 165, 207, 52, 247, 28, 238, 254, 233, 53, 15, 113, 241, 42, 45, 10, 0, 251, 47, 123, 227, 111, 33, 215, 111, 107, 249, 171, 95, 216, 244, 128, 209, 222, 235, 90, 228, 231, 50, 164, 111, 75, 80, 77, 39, 185, 144, 184, 110, 224, 91, 30, 252, 80, 2, 208, 116, 111 },
+                            Ramal = "1010",
                             Situacao = 1
                         });
-                });
-
-            modelBuilder.Entity("InvenLock.Models.FuncionarioContato", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CelPessoal")
-                        .HasColumnType("char(11)");
-
-                    b.Property<string>("EmailCorporativo")
-                        .HasColumnType("varchar(70)");
-
-                    b.Property<string>("EmailPessoal")
-                        .HasColumnType("varchar(70)");
-
-                    b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RamalCorporativo")
-                        .HasColumnType("char(4)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FuncionarioId")
-                        .IsUnique();
-
-                    b.ToTable("FuncionarioContatos");
                 });
 
             modelBuilder.Entity("InvenLock.Models.ManutEquip", b =>
@@ -279,43 +241,21 @@ namespace InvenLock.Migrations
                     b.ToTable("SucataEquips");
                 });
 
-            modelBuilder.Entity("InvenLock.Models.EmprestimoEquip", b =>
-                {
-                    b.HasOne("InvenLock.Models.EstoqueEquipamento", "EstoqueEquipamento")
-                        .WithOne("EmprestimoEquip")
-                        .HasForeignKey("InvenLock.Models.EmprestimoEquip", "EstoqueEquipamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("InvenLock.Models.FormEmprestimo", "FormEmprestimo")
-                        .WithMany("EmprestimoEquip")
-                        .HasForeignKey("FormEmprestimoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EstoqueEquipamento");
-
-                    b.Navigation("FormEmprestimo");
-                });
-
             modelBuilder.Entity("InvenLock.Models.FormEmprestimo", b =>
                 {
+                    b.HasOne("InvenLock.Models.EstoqueEquipamento", "EstoqueEquipamento")
+                        .WithMany("FormEmprestimo")
+                        .HasForeignKey("EstoqueEquipamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("InvenLock.Models.Funcionario", "Funcionario")
                         .WithMany("FormEmprestimo")
                         .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Funcionario");
-                });
-
-            modelBuilder.Entity("InvenLock.Models.FuncionarioContato", b =>
-                {
-                    b.HasOne("InvenLock.Models.Funcionario", "Funcionario")
-                        .WithOne("FuncionarioContato")
-                        .HasForeignKey("InvenLock.Models.FuncionarioContato", "FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("EstoqueEquipamento");
 
                     b.Navigation("Funcionario");
                 });
@@ -363,23 +303,16 @@ namespace InvenLock.Migrations
 
             modelBuilder.Entity("InvenLock.Models.EstoqueEquipamento", b =>
                 {
-                    b.Navigation("EmprestimoEquip");
+                    b.Navigation("FormEmprestimo");
 
                     b.Navigation("ManutEquip");
 
                     b.Navigation("SucataEquip");
                 });
 
-            modelBuilder.Entity("InvenLock.Models.FormEmprestimo", b =>
-                {
-                    b.Navigation("EmprestimoEquip");
-                });
-
             modelBuilder.Entity("InvenLock.Models.Funcionario", b =>
                 {
                     b.Navigation("FormEmprestimo");
-
-                    b.Navigation("FuncionarioContato");
 
                     b.Navigation("Ocorrencia");
                 });

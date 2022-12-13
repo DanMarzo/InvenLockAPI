@@ -12,7 +12,9 @@ namespace InvenLock.Controllers
     {
         public readonly DataContext _context;
         public FuncionarioController(DataContext context){ _context = context; }
-        
+
+        // ---> ADICIONA FUNCIONARIO <---
+
         [HttpPost]
         public async Task<IActionResult> NovoFuncionario(Funcionario funcionario)
         {
@@ -37,6 +39,9 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        // ---> ALTERAR SITUACAO FUNCIONARIO (ATIVO/INATIVO) <---
+
         [HttpPut]
         public async Task<IActionResult> AtualizaSituacaoFuncAsync(Funcionario novaInfoFunc)
         {
@@ -55,6 +60,9 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        // ---> AUTENTICAR FUNCIONARIO(ATIVO/INATIVO) <---
+
         [HttpPost("AutenticarFunc")]
         public async Task<IActionResult> AutenticarFuncionario(Funcionario funcLogin)
         {
@@ -77,5 +85,25 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        // ---> CONSULTAR TODOS FUNCIONARIOS <---
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                List<Funcionario> listaFunc = await _context.Funcionarios.ToListAsync();
+                if (listaFunc == null)
+                    throw new Exception("Nenhum Funcionário =(!");
+                return Ok(listaFunc);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // --->  <---
     }
 }

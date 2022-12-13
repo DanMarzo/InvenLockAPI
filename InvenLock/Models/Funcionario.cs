@@ -9,9 +9,8 @@ namespace InvenLock.Models
     {
         //Atributos para relacionamento
         public int Id { get; set; }
-        public List<FormEmprestimo> FormEmprestimo { get; set; }
         [JsonIgnore]
-        public FuncionarioContato FuncionarioContato { get; set; }
+        public List<FormEmprestimo> FormEmprestimo { get; set; }
         [JsonIgnore]
         public List<Ocorrencia> Ocorrencia { get; set; }
         //Atributos
@@ -24,8 +23,17 @@ namespace InvenLock.Models
         public SituacaoFuncEnum Situacao { get; set; }
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
-        public byte[] FotoFuncionario { get; set;  }
+        public byte[] FotoFuncionario { get; set; }
         [NotMapped]
         public string PasswordString { get; set; }
+        [Column(TypeName ="char(11)")]
+        public string CelPessoal { get; set; }
+        [Column(TypeName = "char(4)")]
+        public string Ramal { get; set; }
+        [Column(TypeName = "varchar(70)")]
+        public string EmailCorp { get; set; }
+
+        [Column(TypeName = "varchar(70)")]
+        public string EmailPessoal { get; set; }
     }
 }

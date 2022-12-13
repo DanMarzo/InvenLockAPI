@@ -67,7 +67,7 @@ namespace InvenLock.Migrations
                     b.Property<DateTime?>("Devolucao")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Emissao")
+                    b.Property<DateTime?>("Emissao")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EstoqueEquipamentoId")
@@ -96,11 +96,20 @@ namespace InvenLock.Migrations
                     b.Property<DateTime>("Admissao")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CelPessoal")
+                        .HasColumnType("char(11)");
+
                     b.Property<string>("Cpf")
                         .HasColumnType("char(11)");
 
                     b.Property<DateTime?>("Demissao")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("EmailCorp")
+                        .HasColumnType("varchar(70)");
+
+                    b.Property<string>("EmailPessoal")
+                        .HasColumnType("varchar(70)");
 
                     b.Property<byte[]>("FotoFuncionario")
                         .HasColumnType("varbinary(max)");
@@ -114,8 +123,13 @@ namespace InvenLock.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("Ramal")
+                        .HasColumnType("char(4)");
+
                     b.Property<int>("Situacao")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.HasKey("Id");
 
@@ -125,44 +139,17 @@ namespace InvenLock.Migrations
                         new
                         {
                             Id = 1,
-                            Admissao = new DateTime(2022, 12, 11, 18, 0, 12, 85, DateTimeKind.Local).AddTicks(2964),
+                            Admissao = new DateTime(2022, 12, 13, 13, 6, 16, 5, DateTimeKind.Local).AddTicks(4695),
+                            CelPessoal = "11955008212",
                             Cpf = "12345678901",
+                            EmailCorp = "marzogildan@invenlock.com",
+                            EmailPessoal = "marzogildan@gmail.com",
                             Nome = "Dan",
-                            PasswordHash = new byte[] { 87, 168, 234, 193, 33, 196, 12, 140, 152, 96, 78, 46, 148, 228, 121, 55, 254, 158, 69, 63, 214, 102, 133, 102, 56, 135, 209, 222, 74, 103, 5, 249, 57, 127, 182, 132, 232, 137, 193, 156, 146, 189, 67, 52, 29, 95, 88, 93, 96, 10, 156, 185, 36, 180, 74, 244, 142, 69, 196, 188, 107, 200, 170, 238 },
-                            PasswordSalt = new byte[] { 31, 136, 211, 28, 195, 95, 167, 185, 111, 151, 187, 81, 102, 60, 141, 145, 20, 151, 26, 60, 107, 170, 103, 69, 179, 47, 92, 129, 177, 79, 185, 6, 181, 252, 84, 241, 174, 154, 165, 94, 29, 71, 223, 121, 214, 64, 1, 67, 100, 164, 160, 239, 52, 59, 185, 174, 226, 38, 212, 57, 165, 94, 77, 133, 247, 84, 19, 133, 172, 111, 211, 144, 147, 89, 109, 96, 25, 1, 42, 109, 206, 235, 37, 190, 189, 247, 116, 186, 254, 90, 244, 106, 46, 47, 211, 250, 99, 248, 63, 149, 73, 121, 180, 45, 2, 214, 199, 29, 18, 15, 6, 196, 151, 43, 2, 176, 134, 182, 14, 226, 112, 234, 249, 21, 135, 158, 48, 155 },
+                            PasswordHash = new byte[] { 219, 98, 106, 66, 97, 109, 100, 117, 161, 119, 36, 129, 222, 138, 2, 127, 36, 25, 190, 238, 96, 222, 36, 229, 247, 213, 154, 154, 223, 91, 72, 129, 253, 147, 225, 48, 119, 246, 103, 53, 253, 4, 42, 192, 174, 176, 222, 241, 201, 125, 15, 23, 61, 58, 206, 104, 124, 129, 113, 129, 243, 94, 229, 96 },
+                            PasswordSalt = new byte[] { 105, 139, 107, 110, 0, 137, 150, 195, 40, 123, 12, 179, 53, 252, 143, 8, 161, 211, 68, 136, 178, 191, 149, 185, 250, 125, 214, 51, 32, 120, 250, 17, 245, 75, 116, 17, 28, 46, 24, 107, 54, 201, 117, 174, 182, 100, 114, 172, 242, 179, 157, 152, 15, 74, 125, 193, 0, 56, 154, 7, 112, 242, 209, 157, 100, 84, 67, 203, 52, 149, 60, 165, 207, 52, 247, 28, 238, 254, 233, 53, 15, 113, 241, 42, 45, 10, 0, 251, 47, 123, 227, 111, 33, 215, 111, 107, 249, 171, 95, 216, 244, 128, 209, 222, 235, 90, 228, 231, 50, 164, 111, 75, 80, 77, 39, 185, 144, 184, 110, 224, 91, 30, 252, 80, 2, 208, 116, 111 },
+                            Ramal = "1010",
                             Situacao = 1
                         });
-                });
-
-            modelBuilder.Entity("InvenLock.Models.FuncionarioContato", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CelPessoal")
-                        .HasColumnType("char(11)");
-
-                    b.Property<string>("EmailCorporativo")
-                        .HasColumnType("varchar(70)");
-
-                    b.Property<string>("EmailPessoal")
-                        .HasColumnType("varchar(70)");
-
-                    b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RamalCorporativo")
-                        .HasColumnType("char(4)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FuncionarioId")
-                        .IsUnique();
-
-                    b.ToTable("FuncionarioContatos");
                 });
 
             modelBuilder.Entity("InvenLock.Models.ManutEquip", b =>
@@ -270,17 +257,6 @@ namespace InvenLock.Migrations
                     b.Navigation("Funcionario");
                 });
 
-            modelBuilder.Entity("InvenLock.Models.FuncionarioContato", b =>
-                {
-                    b.HasOne("InvenLock.Models.Funcionario", "Funcionario")
-                        .WithOne("FuncionarioContato")
-                        .HasForeignKey("InvenLock.Models.FuncionarioContato", "FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Funcionario");
-                });
-
             modelBuilder.Entity("InvenLock.Models.ManutEquip", b =>
                 {
                     b.HasOne("InvenLock.Models.EstoqueEquipamento", "EstoqueEquipamento")
@@ -334,8 +310,6 @@ namespace InvenLock.Migrations
             modelBuilder.Entity("InvenLock.Models.Funcionario", b =>
                 {
                     b.Navigation("FormEmprestimo");
-
-                    b.Navigation("FuncionarioContato");
 
                     b.Navigation("Ocorrencia");
                 });
