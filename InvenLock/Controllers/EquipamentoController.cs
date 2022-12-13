@@ -105,9 +105,9 @@ namespace InvenLock.Controllers
         }
         // -- FIM -- INSERÇÃO DE DADOS
         // -- INICIO -- Atualiza dados
-        // ---------> (INICIO) REFERENTE A INCLUSÃO DE UM FORMULARIO <--------- 
+        // -----> (INICIO) REFERENTE A INCLUSÃO DE UM FORMULARIO <----- 
         [HttpPost("IncluirForms")] //Funciona =)   
-        public async Task<IActionResult> AddFormaAsync(FormEmprestimo form)
+        public async Task<IActionResult> AddFormAsync(FormEmprestimo form)
         {
             try
             {
@@ -160,6 +160,7 @@ namespace InvenLock.Controllers
             _context.SaveChanges();
             return true;
         }
-        // ---------> (fim) REFERENTE A INCLUSÃO DE UM FORMULARIO <--------- 
+        // -----> (fim) REFERENTE A INCLUSÃO DE UM FORMULARIO <-----
+
     }
 }
