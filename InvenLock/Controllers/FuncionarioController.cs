@@ -88,7 +88,7 @@ namespace InvenLock.Controllers
 
         // ---> CONSULTAR TODOS FUNCIONARIOS <---
 
-        [HttpGet("GetAll")]
+        [HttpGet("Listar")]
         public async Task<IActionResult> GetAll()
         {
             try
