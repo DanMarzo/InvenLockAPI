@@ -60,10 +60,15 @@ namespace InvenLock.Controllers
         {
             try
             {
-                Funcionario autenticar = await _context.Funcionarios.FirstOrDefaultAsync(x => x.Id == funcLogin.Id);
-                if (autenticar != null)
+                Funcionario autenticar = await _context.Funcionarios.FirstOrDefaultAsync(x => x.Nome.ToLower().Equals(funcLogin.Nome.ToLower()));
+                //Funcionario autenticar = await _context.Funcionarios.FirstOrDefaultAsync(x => x.Id == funcLogin.Id);
+
+                if (autenticar == null)
                     throw new Exception("Funcionario não encontrado =(");
-                if (!Criptografia.VerificarPasswordHash(funcLogin.PasswordString, funcLogin.PasswordHash, funcLogin.PasswordSalt))
+                
+                //if (!Criptografia.VerificarPasswordHash(funcLogin.PasswordString{Senha Enviada}, autenticar.PasswordHash{Senha do banco}, autenticar.PasswordSalt{Senha do banco}))
+                
+                if (!Criptografia.VerificarPasswordHash(funcLogin.PasswordString, autenticar.PasswordHash, autenticar.PasswordSalt))
                     throw new Exception("Senha Incorreta =( !");
                 return Ok($"Usuario autenticado, bem-vindo {autenticar.Nome}");
             }

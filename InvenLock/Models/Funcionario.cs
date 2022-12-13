@@ -13,7 +13,6 @@ namespace InvenLock.Models
         [JsonIgnore]
         public FuncionarioContato FuncionarioContato { get; set; }
         [JsonIgnore]
-        //public InfraFuncionario InfraFuncionario { get; set; }
         public List<Ocorrencia> Ocorrencia { get; set; }
         //Atributos
         [Column(TypeName = "varchar(20)")]
