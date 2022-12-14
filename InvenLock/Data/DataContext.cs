@@ -12,7 +12,6 @@ namespace InvenLock.Data
         { }
         public DbSet<EstoqueEquipamento> EstoqueEquipamentos { get;set; }
         public DbSet<ManutEquip> ManutEquips { get;set; }
-        public DbSet<SucataEquip> SucataEquips { get;set; }
         public DbSet<Ocorrencia> Ocorrencias { get; set; }
         //public DbSet<EmprestimoEquip> EmprestimoEquip { get; set; }
         public DbSet<FormEmprestimo> FormEmprestimos { get; set; }

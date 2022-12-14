@@ -14,6 +14,7 @@ namespace InvenLock.Controllers
     {
         public readonly DataContext _context;
         public OcorrenciasController(DataContext context){ _context = context; }
+        // -----> INCLUIR OCORRÊNCIA <-----
 
         [HttpPost]
         public async Task<IActionResult> NovaOcorrencia(Ocorrencia ocorrencia)
@@ -76,6 +77,7 @@ namespace InvenLock.Controllers
             _context.SaveChanges();
             return true;
         }
+        // -----> LISTAR OCORRÊNCIA <-----
 
         [HttpGet("Listar")]
         public async Task<IActionResult> ListarOcorrencias()
@@ -93,6 +95,8 @@ namespace InvenLock.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        // -----> TROCA SITUAÇÃO OCORRÊNCIA<-----
+
         [HttpPut("TrocaSituacao")]
         public async Task<IActionResult> NovaSituacao(Ocorrencia ocorrencia)
         {

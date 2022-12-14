@@ -9,10 +9,6 @@ namespace InvenLock.Models
     {
         public int Id { get; set; }
         public List<FormEmprestimo> FormEmprestimo { get; set; } = new List<FormEmprestimo>();
-        [JsonIgnore]
-        public SucataEquip SucataEquip { get; set; }
-        [JsonIgnore]
-        public ManutEquip ManutEquip { get; set; }
         //Atributos
         public TipoEquipEnum Tipo { get; set; }
         public SituacaoEquipEnum Situacao { get; set; }

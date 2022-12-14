@@ -162,5 +162,31 @@ namespace InvenLock.Controllers
             return true;
         }
         // -----> (fim) REFERENTE A INCLUSÃO DE UM FORMULARIO <-----
+        // -----> ALTERAR PARA SUCATA <-----
+        [HttpPut("Sucata")]
+        public async Task<IActionResult> Sucata(EstoqueEquipamento estoque)
+        {
+            try
+            {
+                EstoqueEquipamento novaSucata = await _context.EstoqueEquipamentos.FirstOrDefaultAsync(x => x.Id == estoque.Id );
+                if (novaSucata == null)
+                    throw new Exception("Nada encontrado +_+");
+                novaSucata.DataFimEquip = DateTime.Now;
+                novaSucata.Situacao = SituacaoEquipEnum.Sucata;
+                
+                var attach = _context.Attach(novaSucata);
+
+                attach.Property(x => x.Id).IsModified = false;
+                attach.Property(x => x.DataFimEquip).IsModified = true;
+                attach.Property(x => x.Situacao).IsModified = true;
+                await _context.SaveChangesAsync();
+
+                return Ok($"ID: {novaSucata.Id} agora é sucata");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
