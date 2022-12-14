@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InvenLock.Models.Enums;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Identity.Client;
 
 namespace InvenLock.Controllers
 {
@@ -88,6 +89,28 @@ namespace InvenLock.Controllers
                 throw new Exception("Nada encontrado");
             }
             catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("TrocaSituacao")]
+        public async Task<IActionResult> NovaSituacao(Ocorrencia ocorrencia)
+        {
+            try
+            {
+                Ocorrencia atualizar = await _context.Ocorrencias.FirstOrDefaultAsync(x => x.Id == ocorrencia.Id);
+                if (atualizar == null)
+                    throw new Exception("Ocorrência não existe ^_^");
+
+                atualizar.Situacao = ocorrencia.Situacao;
+                var attach = _context.Attach(atualizar);//aqui deve ir o resultado da pesquisa
+                attach.Property(x => x.Id).IsModified = false; 
+                attach.Property(x => x.Situacao).IsModified = true;
+                await _context.SaveChangesAsync();
+
+                return Ok($"Atualizado com sucesso ^^, nova situacao {ocorrencia.Situacao}");
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
