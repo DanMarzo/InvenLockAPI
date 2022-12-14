@@ -8,8 +8,7 @@ namespace InvenLock.Models
     public class EstoqueEquipamento
     {
         public int Id { get; set; }
-        [JsonIgnore]
-        public List<FormEmprestimo> FormEmprestimo { get; set; }
+        public List<FormEmprestimo> FormEmprestimo { get; set; } = new List<FormEmprestimo>();
         [JsonIgnore]
         public SucataEquip SucataEquip { get; set; }
         [JsonIgnore]
@@ -17,6 +16,10 @@ namespace InvenLock.Models
         //Atributos
         public TipoEquipEnum Tipo { get; set; }
         public SituacaoEquipEnum Situacao { get; set; }
+
+
+
+
         [Column(TypeName = "varchar(250)")]
         public string? Descricao { get; set; }
         [Column(TypeName = "varchar(20)")]

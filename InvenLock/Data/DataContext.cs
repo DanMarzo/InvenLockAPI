@@ -22,6 +22,13 @@ namespace InvenLock.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*ManutEquip manut = new();
+            manut.DataEntrada = DateTime.Now;
+            manut.Desc = "miseravi";
+            manut.EstoqueEquipamentoId = 1;
+            manut.Situacao = SituacaoManuEnum.Pendente;
+            modelBuilder.Entity<Funcionario>().HasData(manut);
+            */
             modelBuilder.Entity<ManutEquip>().Property(f => f.Situacao).HasDefaultValue(SituacaoManuEnum.Pendente);
             
             modelBuilder.Entity<Ocorrencia>().Property(f => f.Situacao).HasDefaultValue(SituacaoFuncOcoEnum.Ativo);

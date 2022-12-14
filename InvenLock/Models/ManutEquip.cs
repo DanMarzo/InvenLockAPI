@@ -14,12 +14,11 @@ namespace InvenLock.Models
         public int EstoqueEquipamentoId { get; set; }
         [JsonIgnore]
         public Ocorrencia Ocorrencia { get; set; }
-        //public int OcorrenciaId { get; set; }
-        //atributos
         public DateTime DataEntrada { get; set; }
         public DateTime? DataSaida { get; set; }
         [Column(TypeName = "varchar(250)")]
         public string Desc { get; set; }
         public SituacaoManuEnum Situacao { get; set; }
+        
     }
 }

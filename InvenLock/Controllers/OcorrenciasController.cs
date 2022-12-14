@@ -19,42 +19,73 @@ namespace InvenLock.Controllers
         {
             try 
             {
-                /*List<ManutEquip> consultLista = new List<ManutEquip>();
-                consultLista = await _context.ManutEquips.Where(x => x.Id == ocorrencia.IdEquipamento).ToListAsync();
+                bool atualizaSituacao = AtualizaSituacao(ocorrencia);
+                bool consultarFinalizado = ConsultarFinalizado(ocorrencia);
 
-                if(consultLista.Count() != 0)
-                {
-                    foreach (var i in consultLista)
-                    {
-                        if (i.Situacao != SituacaoManuEnum.Finalizado) 
-                            throw new Exception("O mesmo está em manutenção");
-                    }*/
+                if (!atualizaSituacao)
+                    throw new Exception("Não foi encontrado nada :( ");
+                if(!consultarFinalizado)
+                    throw new Exception("O Id do equipamento está em manutenção, verifique a situação!");
 
-                EstoqueEquipamento equip = await _context.EstoqueEquipamentos.FirstOrDefaultAsync(x => x.Id == ocorrencia.IdEquipamento);
-                    if (equip == null) 
-                        throw new Exception("O equipamento nao existe! =)");
+                ocorrencia.DataOcorrencia = DateTime.Now;
+                await _context.Ocorrencias.AddAsync(ocorrencia);
+                int nLinha = await _context.SaveChangesAsync();
 
-                    ManutEquip novo = new();
-                    int pesq = await _context.ManutEquips.MaxAsync(m => m.Id);
-                    
-                    pesq++;
+                if(nLinha != 0 )
+                    IncluirManut(ocorrencia);
+                //Consegui incluir a ocorrencia o equipamento manutenção, porem resta ainda conseguir associar com o Id do manut
 
-                    novo.Id = pesq;
-                    novo.Desc = ocorrencia.DescOcorrencia;
-                    novo.DataEntrada = DateTime.Now;
-                    novo.EstoqueEquipamentoId = equip.Id;
+                return Ok($"Nova ocorrência de id: {ocorrencia.Id}, criada com sucesso");
 
-                    equip.Situacao = SituacaoEquipEnum.Manutenção;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        public void IncluirManut(Ocorrencia ocorrencia)
+        {
+            ManutEquip novo = new ManutEquip();
+            novo.Desc = ocorrencia.DescOcorrencia;
+            novo.DataEntrada = DateTime.Now;
+            novo.EstoqueEquipamentoId = ocorrencia.IdEquipamento;
+            _context.ManutEquips.Add(novo);
+            _context.SaveChanges();
+        }
+        public bool ConsultarFinalizado(Ocorrencia ocorrencia)
+        {
+            List<ManutEquip> fim = new List<ManutEquip>();
+            fim = _context.ManutEquips.Where(x => x.Id == ocorrencia.IdEquipamento).ToList();
 
-                    ocorrencia.DataOcorrencia = DateTime.Now;
+            foreach(var i in fim)
+            {
+                if (i.Situacao != SituacaoManuEnum.Finalizado)
+                    return false;
+            }
+            return true;
+        }
+        
+        public bool AtualizaSituacao(Ocorrencia ocorrencia)
+        {
+            EstoqueEquipamento estoque = _context.EstoqueEquipamentos.Where(x => x.Id.Equals(ocorrencia.IdEquipamento)).FirstOrDefault();
+            if (estoque == null)
+                return false;
+            estoque.Situacao = SituacaoEquipEnum.Manutenção;
+            _context.Update(estoque);
+            _context.SaveChanges();
+            return true;
+        }
 
-                    _context.EstoqueEquipamentos.Update(equip);
-                    await _context.ManutEquips.AddAsync(novo);
-                    await _context.Ocorrencias.AddAsync(ocorrencia);
-                    await _context.SaveChangesAsync();
+        [HttpGet("Listar")]
+        public async Task<IActionResult> ListarOcorrencias()
+        {
+            try
+            {
+                List<Ocorrencia> listar = await _context.Ocorrencias.ToListAsync();
 
-                    return Ok(ocorrencia);
-                //}
+                if (listar != null)
+                    return Ok(listar);
+                throw new Exception("Nada encontrado");
             }
             catch(Exception ex)
             {
