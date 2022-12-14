@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InvenLock.Migrations
 {
     /// <inheritdoc />
-    public partial class RetirandoContato : Migration
+    public partial class AlterandoOneToOneOcorrenciaManutEquip : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,6 +52,29 @@ namespace InvenLock.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Funcionarios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ManutEquips",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EstoqueEquipamentoId = table.Column<int>(type: "int", nullable: false),
+                    DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataSaida = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Desc = table.Column<string>(type: "varchar(250)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ManutEquips", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ManutEquips_EstoqueEquipamentos_EstoqueEquipamentoId",
+                        column: x => x.EstoqueEquipamentoId,
+                        principalTable: "EstoqueEquipamentos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,6 +132,7 @@ namespace InvenLock.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    ManutEquipId = table.Column<int>(type: "int", nullable: false),
                     FuncionarioId = table.Column<int>(type: "int", nullable: false),
                     DescOcorrencia = table.Column<string>(type: "varchar(250)", nullable: true),
                     DataOcorrencia = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -122,34 +146,10 @@ namespace InvenLock.Migrations
                         principalTable: "Funcionarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ManutEquips",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EstoqueEquipamentoId = table.Column<int>(type: "int", nullable: false),
-                    OcorrenciaId = table.Column<int>(type: "int", nullable: false),
-                    DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataSaida = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Desc = table.Column<string>(type: "varchar(250)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ManutEquips", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ManutEquips_EstoqueEquipamentos_EstoqueEquipamentoId",
-                        column: x => x.EstoqueEquipamentoId,
-                        principalTable: "EstoqueEquipamentos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ManutEquips_Ocorrencias_OcorrenciaId",
-                        column: x => x.OcorrenciaId,
-                        principalTable: "Ocorrencias",
+                        name: "FK_Ocorrencias_ManutEquips_ManutEquipId",
+                        column: x => x.ManutEquipId,
+                        principalTable: "ManutEquips",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -157,7 +157,7 @@ namespace InvenLock.Migrations
             migrationBuilder.InsertData(
                 table: "Funcionarios",
                 columns: new[] { "Id", "Admissao", "CelPessoal", "Cpf", "Demissao", "EmailCorp", "EmailPessoal", "FotoFuncionario", "Nome", "PasswordHash", "PasswordSalt", "Ramal", "Situacao" },
-                values: new object[] { 1, new DateTime(2022, 12, 13, 13, 6, 16, 5, DateTimeKind.Local).AddTicks(4695), "11955008212", "12345678901", null, "marzogildan@invenlock.com", "marzogildan@gmail.com", null, "Dan", new byte[] { 219, 98, 106, 66, 97, 109, 100, 117, 161, 119, 36, 129, 222, 138, 2, 127, 36, 25, 190, 238, 96, 222, 36, 229, 247, 213, 154, 154, 223, 91, 72, 129, 253, 147, 225, 48, 119, 246, 103, 53, 253, 4, 42, 192, 174, 176, 222, 241, 201, 125, 15, 23, 61, 58, 206, 104, 124, 129, 113, 129, 243, 94, 229, 96 }, new byte[] { 105, 139, 107, 110, 0, 137, 150, 195, 40, 123, 12, 179, 53, 252, 143, 8, 161, 211, 68, 136, 178, 191, 149, 185, 250, 125, 214, 51, 32, 120, 250, 17, 245, 75, 116, 17, 28, 46, 24, 107, 54, 201, 117, 174, 182, 100, 114, 172, 242, 179, 157, 152, 15, 74, 125, 193, 0, 56, 154, 7, 112, 242, 209, 157, 100, 84, 67, 203, 52, 149, 60, 165, 207, 52, 247, 28, 238, 254, 233, 53, 15, 113, 241, 42, 45, 10, 0, 251, 47, 123, 227, 111, 33, 215, 111, 107, 249, 171, 95, 216, 244, 128, 209, 222, 235, 90, 228, 231, 50, 164, 111, 75, 80, 77, 39, 185, 144, 184, 110, 224, 91, 30, 252, 80, 2, 208, 116, 111 }, "1010", 1 });
+                values: new object[] { 1, new DateTime(2022, 12, 13, 14, 9, 15, 104, DateTimeKind.Local).AddTicks(6175), "11955008212", "12345678901", null, "marzogildan@invenlock.com", "marzogildan@gmail.com", null, "Dan", new byte[] { 27, 251, 167, 145, 204, 94, 6, 173, 0, 1, 164, 164, 213, 19, 148, 203, 229, 236, 119, 139, 192, 130, 28, 28, 40, 16, 48, 81, 7, 75, 174, 214, 45, 118, 219, 10, 198, 44, 202, 102, 205, 249, 84, 121, 232, 60, 30, 135, 125, 136, 191, 67, 198, 242, 32, 133, 196, 109, 97, 168, 11, 81, 219, 140 }, new byte[] { 71, 87, 81, 149, 1, 152, 242, 207, 210, 108, 188, 27, 67, 27, 174, 191, 112, 243, 137, 219, 109, 16, 7, 231, 146, 213, 168, 193, 167, 71, 28, 239, 196, 51, 235, 69, 184, 48, 205, 109, 253, 189, 86, 46, 97, 2, 116, 13, 31, 244, 165, 20, 20, 128, 34, 220, 22, 64, 172, 185, 239, 54, 106, 195, 134, 83, 12, 208, 152, 240, 124, 203, 160, 25, 86, 253, 106, 41, 120, 152, 149, 237, 139, 110, 170, 146, 243, 171, 178, 194, 179, 122, 26, 225, 9, 90, 86, 13, 109, 191, 251, 248, 36, 110, 243, 58, 117, 126, 179, 143, 31, 228, 185, 68, 121, 80, 161, 103, 73, 203, 46, 83, 93, 178, 74, 203, 152, 81 }, "1010", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_FormEmprestimos_EstoqueEquipamentoId",
@@ -176,15 +176,15 @@ namespace InvenLock.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ManutEquips_OcorrenciaId",
-                table: "ManutEquips",
-                column: "OcorrenciaId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Ocorrencias_FuncionarioId",
                 table: "Ocorrencias",
                 column: "FuncionarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ocorrencias_ManutEquipId",
+                table: "Ocorrencias",
+                column: "ManutEquipId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_SucataEquips_EstoqueEquipamentoId",
@@ -200,19 +200,19 @@ namespace InvenLock.Migrations
                 name: "FormEmprestimos");
 
             migrationBuilder.DropTable(
-                name: "ManutEquips");
+                name: "Ocorrencias");
 
             migrationBuilder.DropTable(
                 name: "SucataEquips");
 
             migrationBuilder.DropTable(
-                name: "Ocorrencias");
+                name: "Funcionarios");
+
+            migrationBuilder.DropTable(
+                name: "ManutEquips");
 
             migrationBuilder.DropTable(
                 name: "EstoqueEquipamentos");
-
-            migrationBuilder.DropTable(
-                name: "Funcionarios");
         }
     }
 }

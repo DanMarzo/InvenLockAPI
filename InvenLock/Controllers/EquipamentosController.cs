@@ -12,10 +12,10 @@ namespace InvenLock.Controllers
     
     [ApiController]
     [Route("[controller]")]
-    public class EquipamentoController : ControllerBase
+    public class EquipamentosController : ControllerBase
     {
         public readonly DataContext _context;
-        public EquipamentoController(DataContext context){ _context = context; }
+        public EquipamentosController(DataContext context){ _context = context; }
         public async Task<bool> ValidaUnicidade(int codigoValidar)
         {
             if (await _context.EstoqueEquipamentos.AnyAsync(x => x.Id == codigoValidar))
@@ -67,7 +67,7 @@ namespace InvenLock.Controllers
             try
             {
                 List<EstoqueEquipamento> listaDisponiveis = new List<EstoqueEquipamento>();
-                listaDisponiveis = await _context.EstoqueEquipamentos.Where(x => x.Situacao == StatusEquipEnum.Disponível).ToListAsync();
+                listaDisponiveis = await _context.EstoqueEquipamentos.Where(x => x.Situacao == SituacaoEquipEnum.Disponível).ToListAsync();
 
 
                 if (listaDisponiveis.Count() != 0)
@@ -81,7 +81,8 @@ namespace InvenLock.Controllers
         }
         // -- FIM -- CONSULTAS
         // -- INICIO -- INSERÇÃO DE DADOS
-        [HttpPost("NovoEquip")]
+        //[HttpPost("NovoEquip")]
+        [HttpPost]
         public async Task<IActionResult> AddNovoEquip(EstoqueEquipamento novo)
         {
             try
@@ -90,7 +91,7 @@ namespace InvenLock.Controllers
                     throw new Exception($"O {novo.Id}, já existe! =)");
                 if (await ValidaUnicidadeNome(novo.NomeEquip))
                     throw new Exception($"O {novo.NomeEquip}, já existe! =)");
-                if(novo.Situacao != StatusEquipEnum.Disponível)
+                if(novo.Situacao != SituacaoEquipEnum.Disponível)
                     throw new Exception($"Todos os equipamentos adicionados devem começar como novo, {novo.Situacao} verifique e logo atualize");
 
                 novo.DataCompra = DateTime.Now;
@@ -146,7 +147,7 @@ namespace InvenLock.Controllers
             EstoqueEquipamento consulta = _context.EstoqueEquipamentos.FirstOrDefault(x => x.Id == situacao.EstoqueEquipamentoId);
             if (consulta == null)
                 return false;
-            if (consulta.Situacao != StatusEquipEnum.Disponível)
+            if (consulta.Situacao != SituacaoEquipEnum.Disponível)
                 return false;
             return true;
         }
@@ -155,12 +156,11 @@ namespace InvenLock.Controllers
             EstoqueEquipamento atualizando = _context.EstoqueEquipamentos.FirstOrDefault(x => x.Id == atualiza.EstoqueEquipamentoId);
             if (atualizando == null)
                 return false;
-            atualizando.Situacao = StatusEquipEnum.Emprestado;
+            atualizando.Situacao = SituacaoEquipEnum.Emprestado;
             _context.EstoqueEquipamentos.Update(atualizando);
             _context.SaveChanges();
             return true;
         }
         // -----> (fim) REFERENTE A INCLUSÃO DE UM FORMULARIO <-----
-
     }
 }

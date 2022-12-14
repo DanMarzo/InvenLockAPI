@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvenLock.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221213160616__Retirando_Contato")]
-    partial class RetirandoContato
+    [Migration("20221213192123_alteracaoOcorrencia")]
+    partial class alteracaoOcorrencia
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,14 +142,14 @@ namespace InvenLock.Migrations
                         new
                         {
                             Id = 1,
-                            Admissao = new DateTime(2022, 12, 13, 13, 6, 16, 5, DateTimeKind.Local).AddTicks(4695),
+                            Admissao = new DateTime(2022, 12, 13, 16, 21, 22, 397, DateTimeKind.Local).AddTicks(274),
                             CelPessoal = "11955008212",
                             Cpf = "12345678901",
                             EmailCorp = "marzogildan@invenlock.com",
                             EmailPessoal = "marzogildan@gmail.com",
                             Nome = "Dan",
-                            PasswordHash = new byte[] { 219, 98, 106, 66, 97, 109, 100, 117, 161, 119, 36, 129, 222, 138, 2, 127, 36, 25, 190, 238, 96, 222, 36, 229, 247, 213, 154, 154, 223, 91, 72, 129, 253, 147, 225, 48, 119, 246, 103, 53, 253, 4, 42, 192, 174, 176, 222, 241, 201, 125, 15, 23, 61, 58, 206, 104, 124, 129, 113, 129, 243, 94, 229, 96 },
-                            PasswordSalt = new byte[] { 105, 139, 107, 110, 0, 137, 150, 195, 40, 123, 12, 179, 53, 252, 143, 8, 161, 211, 68, 136, 178, 191, 149, 185, 250, 125, 214, 51, 32, 120, 250, 17, 245, 75, 116, 17, 28, 46, 24, 107, 54, 201, 117, 174, 182, 100, 114, 172, 242, 179, 157, 152, 15, 74, 125, 193, 0, 56, 154, 7, 112, 242, 209, 157, 100, 84, 67, 203, 52, 149, 60, 165, 207, 52, 247, 28, 238, 254, 233, 53, 15, 113, 241, 42, 45, 10, 0, 251, 47, 123, 227, 111, 33, 215, 111, 107, 249, 171, 95, 216, 244, 128, 209, 222, 235, 90, 228, 231, 50, 164, 111, 75, 80, 77, 39, 185, 144, 184, 110, 224, 91, 30, 252, 80, 2, 208, 116, 111 },
+                            PasswordHash = new byte[] { 66, 250, 107, 232, 243, 170, 145, 252, 123, 29, 187, 240, 63, 191, 89, 163, 165, 34, 188, 197, 164, 105, 48, 75, 178, 238, 158, 35, 72, 229, 213, 96, 14, 144, 135, 71, 49, 36, 250, 214, 21, 151, 77, 212, 67, 64, 221, 183, 165, 221, 239, 177, 21, 146, 41, 52, 240, 43, 138, 139, 236, 0, 234, 190 },
+                            PasswordSalt = new byte[] { 181, 201, 186, 16, 47, 177, 199, 122, 184, 76, 161, 7, 30, 168, 239, 9, 163, 13, 127, 118, 125, 130, 211, 213, 140, 175, 214, 249, 83, 74, 121, 217, 74, 60, 99, 231, 186, 2, 40, 60, 71, 76, 183, 65, 164, 250, 162, 87, 195, 17, 178, 164, 234, 6, 187, 39, 15, 212, 160, 126, 211, 221, 94, 96, 39, 76, 106, 233, 15, 92, 95, 162, 155, 141, 251, 5, 211, 103, 149, 55, 9, 65, 36, 72, 23, 220, 125, 34, 68, 50, 92, 17, 30, 134, 190, 8, 160, 5, 164, 172, 179, 46, 195, 100, 24, 27, 136, 21, 165, 1, 93, 215, 210, 74, 179, 29, 213, 99, 187, 100, 126, 202, 221, 166, 77, 212, 255, 78 },
                             Ramal = "1010",
                             Situacao = 1
                         });
@@ -175,18 +175,14 @@ namespace InvenLock.Migrations
                     b.Property<int>("EstoqueEquipamentoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OcorrenciaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<int>("Situacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.HasKey("Id");
 
                     b.HasIndex("EstoqueEquipamentoId")
-                        .IsUnique();
-
-                    b.HasIndex("OcorrenciaId")
                         .IsUnique();
 
                     b.ToTable("ManutEquips");
@@ -209,9 +205,23 @@ namespace InvenLock.Migrations
                     b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdEquipamento")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ManutEquipId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Situacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionarioId");
+
+                    b.HasIndex("ManutEquipId")
+                        .IsUnique();
 
                     b.ToTable("Ocorrencias");
                 });
@@ -268,15 +278,7 @@ namespace InvenLock.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("InvenLock.Models.Ocorrencia", "Ocorrencia")
-                        .WithOne("ManutEquip")
-                        .HasForeignKey("InvenLock.Models.ManutEquip", "OcorrenciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("EstoqueEquipamento");
-
-                    b.Navigation("Ocorrencia");
                 });
 
             modelBuilder.Entity("InvenLock.Models.Ocorrencia", b =>
@@ -287,7 +289,15 @@ namespace InvenLock.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("InvenLock.Models.ManutEquip", "ManutEquip")
+                        .WithOne("Ocorrencia")
+                        .HasForeignKey("InvenLock.Models.Ocorrencia", "ManutEquipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Funcionario");
+
+                    b.Navigation("ManutEquip");
                 });
 
             modelBuilder.Entity("InvenLock.Models.SucataEquip", b =>
@@ -317,9 +327,9 @@ namespace InvenLock.Migrations
                     b.Navigation("Ocorrencia");
                 });
 
-            modelBuilder.Entity("InvenLock.Models.Ocorrencia", b =>
+            modelBuilder.Entity("InvenLock.Models.ManutEquip", b =>
                 {
-                    b.Navigation("ManutEquip");
+                    b.Navigation("Ocorrencia");
                 });
 #pragma warning restore 612, 618
         }

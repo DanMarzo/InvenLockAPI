@@ -14,10 +14,9 @@ namespace InvenLock.Models
         public SucataEquip SucataEquip { get; set; }
         [JsonIgnore]
         public ManutEquip ManutEquip { get; set; }
-
         //Atributos
         public TipoEquipEnum Tipo { get; set; }
-        public StatusEquipEnum Situacao { get; set; }
+        public SituacaoEquipEnum Situacao { get; set; }
         [Column(TypeName = "varchar(250)")]
         public string? Descricao { get; set; }
         [Column(TypeName = "varchar(20)")]

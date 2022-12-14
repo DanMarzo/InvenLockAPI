@@ -8,10 +8,10 @@ namespace InvenLock.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FuncionarioController : ControllerBase
+    public class FuncionariosController : ControllerBase
     {
         public readonly DataContext _context;
-        public FuncionarioController(DataContext context){ _context = context; }
+        public FuncionariosController(DataContext context){ _context = context; }
 
         // ---> ADICIONA FUNCIONARIO <---
 

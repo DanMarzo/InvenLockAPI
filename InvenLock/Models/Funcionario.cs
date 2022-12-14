@@ -20,7 +20,7 @@ namespace InvenLock.Models
         public DateTime? Demissao { get; set; }
         [Column(TypeName = "char(11)")]
         public string Cpf { get; set; }
-        public SituacaoFuncEnum Situacao { get; set; }
+        public SituacaoFuncOcoEnum Situacao { get; set; }
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] FotoFuncionario { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace InvenLock.Models.Enums
 {
-    public enum StatusEquipEnum
+    public enum SituacaoEquipEnum
     {
         Disponível   = 1,
         Indisponivel = 2,

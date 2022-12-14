@@ -1,6 +1,6 @@
 ﻿namespace InvenLock.Models.Enums
 {
-    public enum SituacaoFuncEnum
+    public enum SituacaoFuncOcoEnum
     {
         Inativo = 0,
         Ativo   = 1

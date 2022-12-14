@@ -8,6 +8,5 @@
         Tablet     = 4,
         Monitor    = 5,
         Projetor   = 6
-
     }
 }

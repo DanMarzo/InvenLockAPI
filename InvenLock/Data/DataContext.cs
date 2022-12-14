@@ -22,27 +22,11 @@ namespace InvenLock.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*
-            FuncionarioContato ctt = new();
-            ctt.Id = 1;
-            ctt.EmailCorporativo = "marzogildan@invenlock.com";
-            ctt.EmailPessoal = "marzogildan@gmail.com";
-            ctt.CelPessoal = "11955008212";
-            ctt.RamalCorporativo = "1010";
+            modelBuilder.Entity<ManutEquip>().Property(f => f.Situacao).HasDefaultValue(SituacaoManuEnum.Pendente);
+            
+            modelBuilder.Entity<Ocorrencia>().Property(f => f.Situacao).HasDefaultValue(SituacaoFuncOcoEnum.Ativo);
 
-            modelBuilder.Entity<Funcionario>().HasKey(ph => new { ph.FuncionarioContatoId, ph. });
-
-            modelBuilder.Entity<FuncionarioContato>().HasData(
-                new FuncionarioContato 
-                { 
-                    Id = 1,
-                    CelPessoal = "11955008212",
-                    RamalCorporativo = "1010",
-                    EmailCorporativo = "marzogildan@invenlock.com",
-                    EmailPessoal = "marzogildan@gmail.com"
-                });*/
-
-            modelBuilder.Entity<Funcionario>().Property(f => f.Situacao).HasDefaultValue(SituacaoFuncEnum.Ativo);
+            modelBuilder.Entity<Funcionario>().Property(f => f.Situacao).HasDefaultValue(SituacaoFuncOcoEnum.Ativo);
             Funcionario user = new();
             Criptografia.CriarPasswordHash("1q2w3e4r", out byte[] hash, out byte[] salt);
             user.Id = 1;
@@ -52,14 +36,13 @@ namespace InvenLock.Data
             user.PasswordSalt = salt;
             user.PasswordString = string.Empty;
             user.Cpf = "12345678901";
-            user.Situacao = SituacaoFuncEnum.Ativo;
+            user.Situacao = SituacaoFuncOcoEnum.Ativo;
             user.CelPessoal = "11955008212";
             user.Ramal = "1010";
             user.EmailCorp = "marzogildan@invenlock.com";
             user.EmailPessoal = "marzogildan@gmail.com";
 
             modelBuilder.Entity<Funcionario>().HasData(user);
-
         }
     }
 }

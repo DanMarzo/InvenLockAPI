@@ -4,6 +4,7 @@ using InvenLock.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvenLock.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221213170915_Alterando_One_To_One_Ocorrencia_ManutEquip")]
+    partial class AlterandoOneToOneOcorrenciaManutEquip
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,14 +142,14 @@ namespace InvenLock.Migrations
                         new
                         {
                             Id = 1,
-                            Admissao = new DateTime(2022, 12, 13, 20, 17, 57, 544, DateTimeKind.Local).AddTicks(2299),
+                            Admissao = new DateTime(2022, 12, 13, 14, 9, 15, 104, DateTimeKind.Local).AddTicks(6175),
                             CelPessoal = "11955008212",
                             Cpf = "12345678901",
                             EmailCorp = "marzogildan@invenlock.com",
                             EmailPessoal = "marzogildan@gmail.com",
                             Nome = "Dan",
-                            PasswordHash = new byte[] { 103, 239, 47, 147, 112, 6, 94, 54, 163, 132, 151, 209, 247, 139, 94, 22, 145, 103, 48, 208, 151, 102, 41, 37, 137, 8, 197, 86, 11, 17, 240, 150, 48, 115, 173, 170, 35, 246, 164, 142, 240, 183, 86, 190, 251, 165, 187, 206, 25, 29, 194, 9, 131, 240, 9, 230, 201, 148, 116, 136, 110, 34, 83, 233 },
-                            PasswordSalt = new byte[] { 18, 33, 86, 187, 101, 46, 60, 215, 92, 106, 154, 65, 240, 117, 198, 73, 192, 228, 75, 93, 125, 100, 44, 91, 69, 26, 2, 90, 19, 69, 42, 40, 46, 76, 200, 39, 205, 83, 117, 53, 142, 96, 93, 223, 65, 158, 13, 36, 132, 228, 95, 221, 23, 131, 137, 127, 67, 140, 186, 245, 124, 221, 43, 216, 202, 21, 189, 19, 179, 93, 210, 8, 192, 23, 4, 233, 51, 120, 198, 235, 37, 117, 168, 71, 97, 153, 120, 114, 139, 88, 57, 98, 50, 129, 175, 21, 76, 234, 104, 141, 203, 195, 59, 43, 197, 157, 24, 26, 194, 40, 193, 149, 85, 149, 79, 245, 189, 30, 130, 212, 210, 121, 188, 117, 155, 106, 27, 80 },
+                            PasswordHash = new byte[] { 27, 251, 167, 145, 204, 94, 6, 173, 0, 1, 164, 164, 213, 19, 148, 203, 229, 236, 119, 139, 192, 130, 28, 28, 40, 16, 48, 81, 7, 75, 174, 214, 45, 118, 219, 10, 198, 44, 202, 102, 205, 249, 84, 121, 232, 60, 30, 135, 125, 136, 191, 67, 198, 242, 32, 133, 196, 109, 97, 168, 11, 81, 219, 140 },
+                            PasswordSalt = new byte[] { 71, 87, 81, 149, 1, 152, 242, 207, 210, 108, 188, 27, 67, 27, 174, 191, 112, 243, 137, 219, 109, 16, 7, 231, 146, 213, 168, 193, 167, 71, 28, 239, 196, 51, 235, 69, 184, 48, 205, 109, 253, 189, 86, 46, 97, 2, 116, 13, 31, 244, 165, 20, 20, 128, 34, 220, 22, 64, 172, 185, 239, 54, 106, 195, 134, 83, 12, 208, 152, 240, 124, 203, 160, 25, 86, 253, 106, 41, 120, 152, 149, 237, 139, 110, 170, 146, 243, 171, 178, 194, 179, 122, 26, 225, 9, 90, 86, 13, 109, 191, 251, 248, 36, 110, 243, 58, 117, 126, 179, 143, 31, 228, 185, 68, 121, 80, 161, 103, 73, 203, 46, 83, 93, 178, 74, 203, 152, 81 },
                             Ramal = "1010",
                             Situacao = 1
                         });
@@ -172,10 +175,8 @@ namespace InvenLock.Migrations
                     b.Property<int>("EstoqueEquipamentoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Situacao")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -202,24 +203,15 @@ namespace InvenLock.Migrations
                     b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEquipamento")
+                    b.Property<int>("ManutEquipId")
                         .HasColumnType("int");
-
-                    b.Property<int?>("ManutEquipId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Situacao")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(1);
 
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionarioId");
 
                     b.HasIndex("ManutEquipId")
-                        .IsUnique()
-                        .HasFilter("[ManutEquipId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Ocorrencias");
                 });
@@ -289,7 +281,9 @@ namespace InvenLock.Migrations
 
                     b.HasOne("InvenLock.Models.ManutEquip", "ManutEquip")
                         .WithOne("Ocorrencia")
-                        .HasForeignKey("InvenLock.Models.Ocorrencia", "ManutEquipId");
+                        .HasForeignKey("InvenLock.Models.Ocorrencia", "ManutEquipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Funcionario");
 
