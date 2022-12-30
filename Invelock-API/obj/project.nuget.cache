@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "vpbbDFLmErdy7T4G8s2UM87/GRBqWW7ev0QfC/PvY49uEvZpa8T4OkB5vG7037Fa9vNXrVnfBmiTdy/OXio5OA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Suporte4\\Desktop\\Projetos\\Invenlock\\Invelock-API\\Invelock-API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Suporte4\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\Suporte4\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Suporte4\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\Suporte4\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\Suporte4\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\Suporte4\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
