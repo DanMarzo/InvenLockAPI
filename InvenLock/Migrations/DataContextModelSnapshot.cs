@@ -17,18 +17,15 @@ namespace InvenLock.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("InvenLock.Models.EstoqueEquipamento", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("EstoqueEquipamentoId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataCompra")
                         .HasColumnType("datetime2");
@@ -51,18 +48,15 @@ namespace InvenLock.Migrations
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("EstoqueEquipamentoId");
 
                     b.ToTable("EstoqueEquipamentos");
                 });
 
             modelBuilder.Entity("InvenLock.Models.FormEmprestimo", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("FormEmprestimoId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("Devolucao")
                         .HasColumnType("datetime2");
@@ -76,7 +70,7 @@ namespace InvenLock.Migrations
                     b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("FormEmprestimoId");
 
                     b.HasIndex("EstoqueEquipamentoId");
 
@@ -87,11 +81,8 @@ namespace InvenLock.Migrations
 
             modelBuilder.Entity("InvenLock.Models.Funcionario", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("FuncionarioId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("Admissao")
                         .HasColumnType("datetime2");
@@ -131,22 +122,22 @@ namespace InvenLock.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(1);
 
-                    b.HasKey("Id");
+                    b.HasKey("FuncionarioId");
 
                     b.ToTable("Funcionarios");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Admissao = new DateTime(2022, 12, 13, 20, 17, 57, 544, DateTimeKind.Local).AddTicks(2299),
+                            FuncionarioId = 1,
+                            Admissao = new DateTime(2022, 12, 29, 14, 2, 42, 996, DateTimeKind.Local).AddTicks(6896),
                             CelPessoal = "11955008212",
                             Cpf = "12345678901",
                             EmailCorp = "marzogildan@invenlock.com",
                             EmailPessoal = "marzogildan@gmail.com",
                             Nome = "Dan",
-                            PasswordHash = new byte[] { 103, 239, 47, 147, 112, 6, 94, 54, 163, 132, 151, 209, 247, 139, 94, 22, 145, 103, 48, 208, 151, 102, 41, 37, 137, 8, 197, 86, 11, 17, 240, 150, 48, 115, 173, 170, 35, 246, 164, 142, 240, 183, 86, 190, 251, 165, 187, 206, 25, 29, 194, 9, 131, 240, 9, 230, 201, 148, 116, 136, 110, 34, 83, 233 },
-                            PasswordSalt = new byte[] { 18, 33, 86, 187, 101, 46, 60, 215, 92, 106, 154, 65, 240, 117, 198, 73, 192, 228, 75, 93, 125, 100, 44, 91, 69, 26, 2, 90, 19, 69, 42, 40, 46, 76, 200, 39, 205, 83, 117, 53, 142, 96, 93, 223, 65, 158, 13, 36, 132, 228, 95, 221, 23, 131, 137, 127, 67, 140, 186, 245, 124, 221, 43, 216, 202, 21, 189, 19, 179, 93, 210, 8, 192, 23, 4, 233, 51, 120, 198, 235, 37, 117, 168, 71, 97, 153, 120, 114, 139, 88, 57, 98, 50, 129, 175, 21, 76, 234, 104, 141, 203, 195, 59, 43, 197, 157, 24, 26, 194, 40, 193, 149, 85, 149, 79, 245, 189, 30, 130, 212, 210, 121, 188, 117, 155, 106, 27, 80 },
+                            PasswordHash = new byte[] { 177, 241, 203, 59, 188, 130, 252, 25, 252, 71, 76, 97, 128, 205, 184, 227, 192, 8, 240, 201, 208, 83, 15, 35, 188, 201, 183, 131, 101, 97, 233, 181, 195, 249, 11, 205, 59, 52, 198, 247, 127, 206, 43, 251, 98, 70, 250, 45, 46, 114, 150, 140, 225, 241, 112, 237, 187, 200, 203, 95, 152, 160, 176, 134 },
+                            PasswordSalt = new byte[] { 43, 60, 194, 249, 158, 102, 35, 204, 100, 51, 177, 228, 173, 54, 30, 22, 209, 186, 117, 112, 57, 218, 100, 241, 60, 112, 218, 90, 115, 206, 157, 164, 194, 149, 40, 229, 9, 251, 99, 8, 42, 182, 58, 150, 226, 87, 14, 70, 140, 82, 69, 122, 105, 3, 104, 70, 245, 212, 132, 40, 241, 60, 9, 49, 57, 194, 185, 1, 195, 53, 10, 165, 203, 141, 104, 99, 182, 68, 1, 172, 57, 138, 46, 95, 3, 175, 31, 84, 114, 112, 80, 5, 2, 64, 45, 115, 255, 114, 66, 60, 114, 32, 251, 76, 89, 119, 56, 35, 187, 21, 104, 152, 28, 142, 163, 151, 187, 75, 175, 81, 49, 75, 190, 235, 47, 122, 193, 118 },
                             Ramal = "1010",
                             Situacao = 1
                         });
@@ -154,11 +145,8 @@ namespace InvenLock.Migrations
 
             modelBuilder.Entity("InvenLock.Models.ManutEquip", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ManutEquipId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataEntrada")
                         .HasColumnType("datetime2");
@@ -177,21 +165,17 @@ namespace InvenLock.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(1);
 
-                    b.HasKey("Id");
+                    b.HasKey("ManutEquipId");
 
-                    b.HasIndex("EstoqueEquipamentoId")
-                        .IsUnique();
+                    b.HasIndex("EstoqueEquipamentoId");
 
                     b.ToTable("ManutEquips");
                 });
 
             modelBuilder.Entity("InvenLock.Models.Ocorrencia", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("OcorrenciaId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("DataOcorrencia")
                         .HasColumnType("datetime2");
@@ -213,7 +197,7 @@ namespace InvenLock.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(1);
 
-                    b.HasKey("Id");
+                    b.HasKey("OcorrenciaId");
 
                     b.HasIndex("FuncionarioId");
 
@@ -222,31 +206,6 @@ namespace InvenLock.Migrations
                         .HasFilter("[ManutEquipId] IS NOT NULL");
 
                     b.ToTable("Ocorrencias");
-                });
-
-            modelBuilder.Entity("InvenLock.Models.SucataEquip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DataEntrada")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DsOcorrido")
-                        .HasColumnType("varchar(250)");
-
-                    b.Property<int>("EstoqueEquipamentoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EstoqueEquipamentoId")
-                        .IsUnique();
-
-                    b.ToTable("SucataEquips");
                 });
 
             modelBuilder.Entity("InvenLock.Models.FormEmprestimo", b =>
@@ -271,8 +230,8 @@ namespace InvenLock.Migrations
             modelBuilder.Entity("InvenLock.Models.ManutEquip", b =>
                 {
                     b.HasOne("InvenLock.Models.EstoqueEquipamento", "EstoqueEquipamento")
-                        .WithOne("ManutEquip")
-                        .HasForeignKey("InvenLock.Models.ManutEquip", "EstoqueEquipamentoId")
+                        .WithMany()
+                        .HasForeignKey("EstoqueEquipamentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -296,24 +255,9 @@ namespace InvenLock.Migrations
                     b.Navigation("ManutEquip");
                 });
 
-            modelBuilder.Entity("InvenLock.Models.SucataEquip", b =>
-                {
-                    b.HasOne("InvenLock.Models.EstoqueEquipamento", "EstoqueEquipamento")
-                        .WithOne("SucataEquip")
-                        .HasForeignKey("InvenLock.Models.SucataEquip", "EstoqueEquipamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EstoqueEquipamento");
-                });
-
             modelBuilder.Entity("InvenLock.Models.EstoqueEquipamento", b =>
                 {
                     b.Navigation("FormEmprestimo");
-
-                    b.Navigation("ManutEquip");
-
-                    b.Navigation("SucataEquip");
                 });
 
             modelBuilder.Entity("InvenLock.Models.Funcionario", b =>

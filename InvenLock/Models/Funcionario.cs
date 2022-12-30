@@ -1,5 +1,6 @@
 ﻿using InvenLock.Models.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -7,8 +8,9 @@ namespace InvenLock.Models
 {
     public class Funcionario
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         //Atributos para relacionamento
-        public int Id { get; set; }
+        public int FuncionarioId { get; set; }
         [JsonIgnore]
         public List<FormEmprestimo> FormEmprestimo { get; set; }
         [JsonIgnore]

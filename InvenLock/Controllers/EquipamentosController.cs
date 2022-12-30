@@ -18,7 +18,7 @@ namespace InvenLock.Controllers
         public EquipamentosController(DataContext context){ _context = context; }
         public async Task<bool> ValidaUnicidade(int codigoValidar)
         {
-            if (await _context.EstoqueEquipamentos.AnyAsync(x => x.Id == codigoValidar))
+            if (await _context.EstoqueEquipamentos.AnyAsync(x => x.EstoqueEquipamentoId == codigoValidar))
                 return true;
             return false;
         }
@@ -51,7 +51,7 @@ namespace InvenLock.Controllers
             try
             {
                 EstoqueEquipamento equipamento = new EstoqueEquipamento();
-                equipamento = await _context.EstoqueEquipamentos.FirstOrDefaultAsync(x => x.Id == idBusca);
+                equipamento = await _context.EstoqueEquipamentos.FirstOrDefaultAsync(x => x.EstoqueEquipamentoId == idBusca);
                 if (equipamento == null)
                    throw new Exception("Nada foi foi encontrado, verifique o Id");
                 return Ok(equipamento);
@@ -87,8 +87,8 @@ namespace InvenLock.Controllers
         {
             try
             {
-                if (await ValidaUnicidade(novo.Id))
-                    throw new Exception($"O {novo.Id}, já existe! =)");
+                if (await ValidaUnicidade(novo.EstoqueEquipamentoId))
+                    throw new Exception($"O {novo.EstoqueEquipamentoId}, já existe! =)");
                 if (await ValidaUnicidadeNome(novo.NomeEquip))
                     throw new Exception($"O {novo.NomeEquip}, já existe! =)");
                 if(novo.Situacao != SituacaoEquipEnum.Disponível)
@@ -97,7 +97,7 @@ namespace InvenLock.Controllers
                 novo.DataCompra = DateTime.Now;
                 await _context.EstoqueEquipamentos.AddAsync(novo);
                 await _context.SaveChangesAsync();
-                return Ok($"{novo.Id}:{novo.NomeEquip}, cadastrado com sucesso!");
+                return Ok($"{novo.EstoqueEquipamentoId}:{novo.NomeEquip}, cadastrado com sucesso!");
             }
             catch(Exception ex)
             {
@@ -137,14 +137,14 @@ namespace InvenLock.Controllers
         }
         public bool FuncionarioAtivo(FormEmprestimo funcAtivo)
         {
-            Funcionario consulta = _context.Funcionarios.FirstOrDefault(x => x.Id == funcAtivo.FuncionarioId);
+            Funcionario consulta = _context.Funcionarios.FirstOrDefault(x => x.FuncionarioId == funcAtivo.FuncionarioId);
             if (consulta != null)
                 return true;
             return false;
         }
         public bool ConsultaDisponibilidade(FormEmprestimo situacao)
         {
-            EstoqueEquipamento consulta = _context.EstoqueEquipamentos.FirstOrDefault(x => x.Id == situacao.EstoqueEquipamentoId);
+            EstoqueEquipamento consulta = _context.EstoqueEquipamentos.FirstOrDefault(x => x.EstoqueEquipamentoId == situacao.EstoqueEquipamentoId);
             if (consulta == null)
                 return false;
             if (consulta.Situacao != SituacaoEquipEnum.Disponível)
@@ -153,7 +153,7 @@ namespace InvenLock.Controllers
         }
         public bool AtualizarDadosEquipamentos(FormEmprestimo atualiza)
         {
-            EstoqueEquipamento atualizando = _context.EstoqueEquipamentos.FirstOrDefault(x => x.Id == atualiza.EstoqueEquipamentoId);
+            EstoqueEquipamento atualizando = _context.EstoqueEquipamentos.FirstOrDefault(x => x.EstoqueEquipamentoId == atualiza.EstoqueEquipamentoId);
             if (atualizando == null)
                 return false;
             atualizando.Situacao = SituacaoEquipEnum.Emprestado;
@@ -168,7 +168,7 @@ namespace InvenLock.Controllers
         {
             try
             {
-                EstoqueEquipamento novaSucata = await _context.EstoqueEquipamentos.FirstOrDefaultAsync(x => x.Id == estoque.Id );
+                EstoqueEquipamento novaSucata = await _context.EstoqueEquipamentos.FirstOrDefaultAsync(x => x.EstoqueEquipamentoId == estoque.EstoqueEquipamentoId );
                 if (novaSucata == null)
                     throw new Exception("Nada encontrado +_+");
                 novaSucata.DataFimEquip = DateTime.Now;
@@ -176,12 +176,12 @@ namespace InvenLock.Controllers
                 
                 var attach = _context.Attach(novaSucata);
 
-                attach.Property(x => x.Id).IsModified = false;
+                attach.Property(x => x.EstoqueEquipamentoId).IsModified = false;
                 attach.Property(x => x.DataFimEquip).IsModified = true;
                 attach.Property(x => x.Situacao).IsModified = true;
                 await _context.SaveChangesAsync();
 
-                return Ok($"ID: {novaSucata.Id} agora é sucata");
+                return Ok($"ID: {novaSucata.EstoqueEquipamentoId} agora é sucata");
             }
             catch (Exception ex)
             {

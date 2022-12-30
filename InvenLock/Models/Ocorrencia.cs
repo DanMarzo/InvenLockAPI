@@ -1,5 +1,6 @@
 ﻿using InvenLock.Models.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -7,7 +8,8 @@ namespace InvenLock.Models
 {
     public class Ocorrencia
     {
-        public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int OcorrenciaId { get; set; }
         [JsonIgnore]
         public ManutEquip ManutEquip { get; set; }
         public int? ManutEquipId { get; set; }

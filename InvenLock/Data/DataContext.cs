@@ -35,7 +35,7 @@ namespace InvenLock.Data
             modelBuilder.Entity<Funcionario>().Property(f => f.Situacao).HasDefaultValue(SituacaoFuncOcoEnum.Ativo);
             Funcionario user = new();
             Criptografia.CriarPasswordHash("1q2w3e4r", out byte[] hash, out byte[] salt);
-            user.Id = 1;
+            user.FuncionarioId = 1;
             user.Nome = "Dan";
             user.Admissao = DateTime.Now;
             user.PasswordHash = hash;

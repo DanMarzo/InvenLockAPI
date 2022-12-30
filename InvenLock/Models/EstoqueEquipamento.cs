@@ -1,5 +1,6 @@
 ﻿using InvenLock.Models.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -7,7 +8,8 @@ namespace InvenLock.Models
 {
     public class EstoqueEquipamento
     {
-        public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int EstoqueEquipamentoId { get; set; }
         public List<FormEmprestimo> FormEmprestimo { get; set; } = new List<FormEmprestimo>();
         //Atributos
         public TipoEquipEnum Tipo { get; set; }

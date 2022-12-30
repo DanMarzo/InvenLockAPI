@@ -1,31 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ETEC\\etec2\\DS-I\\InvenLock\\InvenLock\\InvenLock\\InvenLock.csproj": {}
+    "C:\\Users\\Suporte4\\Desktop\\Projetos\\Invenlock\\InvenLock\\InvenLock.csproj": {}
   },
   "projects": {
-    "D:\\ETEC\\etec2\\DS-I\\InvenLock\\InvenLock\\InvenLock\\InvenLock.csproj": {
+    "C:\\Users\\Suporte4\\Desktop\\Projetos\\Invenlock\\InvenLock\\InvenLock.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ETEC\\etec2\\DS-I\\InvenLock\\InvenLock\\InvenLock\\InvenLock.csproj",
+        "projectUniqueName": "C:\\Users\\Suporte4\\Desktop\\Projetos\\Invenlock\\InvenLock\\InvenLock.csproj",
         "projectName": "InvenLock",
-        "projectPath": "D:\\ETEC\\etec2\\DS-I\\InvenLock\\InvenLock\\InvenLock\\InvenLock.csproj",
-        "packagesPath": "C:\\Users\\DanMarzoGil\\.nuget\\packages\\",
-        "outputPath": "D:\\ETEC\\etec2\\DS-I\\InvenLock\\InvenLock\\InvenLock\\obj\\",
+        "projectPath": "C:\\Users\\Suporte4\\Desktop\\Projetos\\Invenlock\\InvenLock\\InvenLock.csproj",
+        "packagesPath": "C:\\Users\\Suporte4\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Suporte4\\Desktop\\Projetos\\Invenlock\\InvenLock\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\DanMarzoGil\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Suporte4\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,19 +45,29 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.2.3, )"
+              "version": "[6.4.0, )"
             }
           },
           "imports": [

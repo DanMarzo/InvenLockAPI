@@ -47,9 +47,9 @@ namespace InvenLock.Controllers
         {
             try
             {
-                Funcionario atualizarFunc = await _context.Funcionarios.FirstOrDefaultAsync( x => x.Id == novaInfoFunc.Id );
+                Funcionario atualizarFunc = await _context.Funcionarios.FirstOrDefaultAsync( x => x.FuncionarioId == novaInfoFunc.FuncionarioId );
                 if (atualizarFunc == null)
-                    throw new Exception($"Id: {novaInfoFunc.Id} inválido");
+                    throw new Exception($"Id: {novaInfoFunc.FuncionarioId} inválido");
                 atualizarFunc.Situacao = novaInfoFunc.Situacao;
                 _context.Funcionarios.Update(atualizarFunc);
                 int linhas = await _context.SaveChangesAsync();

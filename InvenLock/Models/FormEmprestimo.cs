@@ -1,11 +1,14 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace InvenLock.Models
 {
     public class FormEmprestimo
     {
         //Atributos para relacionamento
-        public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int FormEmprestimoId { get; set; }
         [JsonIgnore]
         public Funcionario Funcionario { get; set; }
         public int FuncionarioId { get; set; }

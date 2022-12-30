@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InvenLock.Migrations
 {
     /// <inheritdoc />
-    public partial class AlterandoOneToOneOcorrenciaManutEquip : Migration
+    public partial class Inicio : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,7 @@ namespace InvenLock.Migrations
                 name: "EstoqueEquipamentos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EstoqueEquipamentoId = table.Column<int>(type: "int", nullable: false),
                     Tipo = table.Column<int>(type: "int", nullable: false),
                     Situacao = table.Column<int>(type: "int", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(250)", nullable: true),
@@ -27,15 +26,14 @@ namespace InvenLock.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EstoqueEquipamentos", x => x.Id);
+                    table.PrimaryKey("PK_EstoqueEquipamentos", x => x.EstoqueEquipamentoId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Funcionarios",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FuncionarioId = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "varchar(20)", nullable: true),
                     Admissao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Demissao = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -51,50 +49,28 @@ namespace InvenLock.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funcionarios", x => x.Id);
+                    table.PrimaryKey("PK_Funcionarios", x => x.FuncionarioId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ManutEquips",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ManutEquipId = table.Column<int>(type: "int", nullable: false),
                     EstoqueEquipamentoId = table.Column<int>(type: "int", nullable: false),
                     DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataSaida = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Desc = table.Column<string>(type: "varchar(250)", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: false)
+                    Situacao = table.Column<int>(type: "int", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ManutEquips", x => x.Id);
+                    table.PrimaryKey("PK_ManutEquips", x => x.ManutEquipId);
                     table.ForeignKey(
                         name: "FK_ManutEquips_EstoqueEquipamentos_EstoqueEquipamentoId",
                         column: x => x.EstoqueEquipamentoId,
                         principalTable: "EstoqueEquipamentos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SucataEquips",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EstoqueEquipamentoId = table.Column<int>(type: "int", nullable: false),
-                    DsOcorrido = table.Column<string>(type: "varchar(250)", nullable: true),
-                    DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SucataEquips", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SucataEquips_EstoqueEquipamentos_EstoqueEquipamentoId",
-                        column: x => x.EstoqueEquipamentoId,
-                        principalTable: "EstoqueEquipamentos",
-                        principalColumn: "Id",
+                        principalColumn: "EstoqueEquipamentoId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -102,8 +78,7 @@ namespace InvenLock.Migrations
                 name: "FormEmprestimos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FormEmprestimoId = table.Column<int>(type: "int", nullable: false),
                     FuncionarioId = table.Column<int>(type: "int", nullable: false),
                     EstoqueEquipamentoId = table.Column<int>(type: "int", nullable: false),
                     Devolucao = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -111,18 +86,18 @@ namespace InvenLock.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FormEmprestimos", x => x.Id);
+                    table.PrimaryKey("PK_FormEmprestimos", x => x.FormEmprestimoId);
                     table.ForeignKey(
                         name: "FK_FormEmprestimos_EstoqueEquipamentos_EstoqueEquipamentoId",
                         column: x => x.EstoqueEquipamentoId,
                         principalTable: "EstoqueEquipamentos",
-                        principalColumn: "Id",
+                        principalColumn: "EstoqueEquipamentoId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FormEmprestimos_Funcionarios_FuncionarioId",
                         column: x => x.FuncionarioId,
                         principalTable: "Funcionarios",
-                        principalColumn: "Id",
+                        principalColumn: "FuncionarioId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -130,34 +105,34 @@ namespace InvenLock.Migrations
                 name: "Ocorrencias",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ManutEquipId = table.Column<int>(type: "int", nullable: false),
+                    OcorrenciaId = table.Column<int>(type: "int", nullable: false),
+                    ManutEquipId = table.Column<int>(type: "int", nullable: true),
                     FuncionarioId = table.Column<int>(type: "int", nullable: false),
+                    IdEquipamento = table.Column<int>(type: "int", nullable: false),
                     DescOcorrencia = table.Column<string>(type: "varchar(250)", nullable: true),
-                    DataOcorrencia = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DataOcorrencia = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Situacao = table.Column<int>(type: "int", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ocorrencias", x => x.Id);
+                    table.PrimaryKey("PK_Ocorrencias", x => x.OcorrenciaId);
                     table.ForeignKey(
                         name: "FK_Ocorrencias_Funcionarios_FuncionarioId",
                         column: x => x.FuncionarioId,
                         principalTable: "Funcionarios",
-                        principalColumn: "Id",
+                        principalColumn: "FuncionarioId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ocorrencias_ManutEquips_ManutEquipId",
                         column: x => x.ManutEquipId,
                         principalTable: "ManutEquips",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ManutEquipId");
                 });
 
             migrationBuilder.InsertData(
                 table: "Funcionarios",
-                columns: new[] { "Id", "Admissao", "CelPessoal", "Cpf", "Demissao", "EmailCorp", "EmailPessoal", "FotoFuncionario", "Nome", "PasswordHash", "PasswordSalt", "Ramal", "Situacao" },
-                values: new object[] { 1, new DateTime(2022, 12, 13, 14, 9, 15, 104, DateTimeKind.Local).AddTicks(6175), "11955008212", "12345678901", null, "marzogildan@invenlock.com", "marzogildan@gmail.com", null, "Dan", new byte[] { 27, 251, 167, 145, 204, 94, 6, 173, 0, 1, 164, 164, 213, 19, 148, 203, 229, 236, 119, 139, 192, 130, 28, 28, 40, 16, 48, 81, 7, 75, 174, 214, 45, 118, 219, 10, 198, 44, 202, 102, 205, 249, 84, 121, 232, 60, 30, 135, 125, 136, 191, 67, 198, 242, 32, 133, 196, 109, 97, 168, 11, 81, 219, 140 }, new byte[] { 71, 87, 81, 149, 1, 152, 242, 207, 210, 108, 188, 27, 67, 27, 174, 191, 112, 243, 137, 219, 109, 16, 7, 231, 146, 213, 168, 193, 167, 71, 28, 239, 196, 51, 235, 69, 184, 48, 205, 109, 253, 189, 86, 46, 97, 2, 116, 13, 31, 244, 165, 20, 20, 128, 34, 220, 22, 64, 172, 185, 239, 54, 106, 195, 134, 83, 12, 208, 152, 240, 124, 203, 160, 25, 86, 253, 106, 41, 120, 152, 149, 237, 139, 110, 170, 146, 243, 171, 178, 194, 179, 122, 26, 225, 9, 90, 86, 13, 109, 191, 251, 248, 36, 110, 243, 58, 117, 126, 179, 143, 31, 228, 185, 68, 121, 80, 161, 103, 73, 203, 46, 83, 93, 178, 74, 203, 152, 81 }, "1010", 1 });
+                columns: new[] { "FuncionarioId", "Admissao", "CelPessoal", "Cpf", "Demissao", "EmailCorp", "EmailPessoal", "FotoFuncionario", "Nome", "PasswordHash", "PasswordSalt", "Ramal", "Situacao" },
+                values: new object[] { 1, new DateTime(2022, 12, 29, 14, 2, 42, 996, DateTimeKind.Local).AddTicks(6896), "11955008212", "12345678901", null, "marzogildan@invenlock.com", "marzogildan@gmail.com", null, "Dan", new byte[] { 177, 241, 203, 59, 188, 130, 252, 25, 252, 71, 76, 97, 128, 205, 184, 227, 192, 8, 240, 201, 208, 83, 15, 35, 188, 201, 183, 131, 101, 97, 233, 181, 195, 249, 11, 205, 59, 52, 198, 247, 127, 206, 43, 251, 98, 70, 250, 45, 46, 114, 150, 140, 225, 241, 112, 237, 187, 200, 203, 95, 152, 160, 176, 134 }, new byte[] { 43, 60, 194, 249, 158, 102, 35, 204, 100, 51, 177, 228, 173, 54, 30, 22, 209, 186, 117, 112, 57, 218, 100, 241, 60, 112, 218, 90, 115, 206, 157, 164, 194, 149, 40, 229, 9, 251, 99, 8, 42, 182, 58, 150, 226, 87, 14, 70, 140, 82, 69, 122, 105, 3, 104, 70, 245, 212, 132, 40, 241, 60, 9, 49, 57, 194, 185, 1, 195, 53, 10, 165, 203, 141, 104, 99, 182, 68, 1, 172, 57, 138, 46, 95, 3, 175, 31, 84, 114, 112, 80, 5, 2, 64, 45, 115, 255, 114, 66, 60, 114, 32, 251, 76, 89, 119, 56, 35, 187, 21, 104, 152, 28, 142, 163, 151, 187, 75, 175, 81, 49, 75, 190, 235, 47, 122, 193, 118 }, "1010", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_FormEmprestimos_EstoqueEquipamentoId",
@@ -172,8 +147,7 @@ namespace InvenLock.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ManutEquips_EstoqueEquipamentoId",
                 table: "ManutEquips",
-                column: "EstoqueEquipamentoId",
-                unique: true);
+                column: "EstoqueEquipamentoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ocorrencias_FuncionarioId",
@@ -184,13 +158,8 @@ namespace InvenLock.Migrations
                 name: "IX_Ocorrencias_ManutEquipId",
                 table: "Ocorrencias",
                 column: "ManutEquipId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SucataEquips_EstoqueEquipamentoId",
-                table: "SucataEquips",
-                column: "EstoqueEquipamentoId",
-                unique: true);
+                unique: true,
+                filter: "[ManutEquipId] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -201,9 +170,6 @@ namespace InvenLock.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ocorrencias");
-
-            migrationBuilder.DropTable(
-                name: "SucataEquips");
 
             migrationBuilder.DropTable(
                 name: "Funcionarios");

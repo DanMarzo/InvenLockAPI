@@ -37,7 +37,7 @@ namespace InvenLock.Controllers
                     IncluirManut(ocorrencia);
                 //Consegui incluir a ocorrencia o equipamento manutenção, porem resta ainda conseguir associar com o Id do manut
 
-                return Ok($"Nova ocorrência de id: {ocorrencia.Id}, criada com sucesso");
+                return Ok($"Nova ocorrência de id: {ocorrencia.OcorrenciaId}, criada com sucesso");
 
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@ namespace InvenLock.Controllers
         public bool ConsultarFinalizado(Ocorrencia ocorrencia)
         {
             List<ManutEquip> fim = new List<ManutEquip>();
-            fim = _context.ManutEquips.Where(x => x.Id == ocorrencia.IdEquipamento).ToList();
+            fim = _context.ManutEquips.Where(x => x.ManutEquipId == ocorrencia.IdEquipamento).ToList();
 
             foreach(var i in fim)
             {
@@ -69,7 +69,7 @@ namespace InvenLock.Controllers
         
         public bool AtualizaSituacao(Ocorrencia ocorrencia)
         {
-            EstoqueEquipamento estoque = _context.EstoqueEquipamentos.Where(x => x.Id.Equals(ocorrencia.IdEquipamento)).FirstOrDefault();
+            EstoqueEquipamento estoque = _context.EstoqueEquipamentos.Where(x => x.EstoqueEquipamentoId.Equals(ocorrencia.IdEquipamento)).FirstOrDefault();
             if (estoque == null)
                 return false;
             estoque.Situacao = SituacaoEquipEnum.Manutenção;
@@ -102,13 +102,13 @@ namespace InvenLock.Controllers
         {
             try
             {
-                Ocorrencia atualizar = await _context.Ocorrencias.FirstOrDefaultAsync(x => x.Id == ocorrencia.Id);
+                Ocorrencia atualizar = await _context.Ocorrencias.FirstOrDefaultAsync(x => x.OcorrenciaId == ocorrencia.OcorrenciaId);
                 if (atualizar == null)
                     throw new Exception("Ocorrência não existe ^_^");
 
                 atualizar.Situacao = ocorrencia.Situacao;
                 var attach = _context.Attach(atualizar);//aqui deve ir o resultado da pesquisa
-                attach.Property(x => x.Id).IsModified = false; 
+                attach.Property(x => x.OcorrenciaId).IsModified = false; 
                 attach.Property(x => x.Situacao).IsModified = true;
                 await _context.SaveChangesAsync();
 
